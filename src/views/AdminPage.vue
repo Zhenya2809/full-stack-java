@@ -1,39 +1,78 @@
 <template>
-  <div>
-    <ul id="example-1">
-      <li v-for="item in items" :key="item.username">
-        {{ item.id }}
-        {{ item.username }}
-        {{ item.email }}
-        {{ item.firstName }}
-        {{ item.lastName }}
-      </li>
-    </ul>
-    <n-button type="info" @click="getAllUser">
-      GET
-    </n-button>
-  </div>
-  <form>
-    <n-form-item label="id" path="id">
-      <n-input v-model:value="id" placeholder="id"/>
+  <h1>Users MENU </h1>
+  <div v-if="hasRole('ROLE_ADMIN')">
+    <n-data-table class="table"
+                  :columns="columns"
+                  :data="items"
+                  :pagination="pagination"
+                  :bordered="false"
+    />
+
+
+    <n-form-item class="form-control" path="id">
+      <n-input class="even-row-color" v-model:value="id" placeholder="id"/>
     </n-form-item>
-    <n-button type="info" @click="deleteUsers">
+    <n-button type="error" @click="deleteUsers">
       DELETE
     </n-button>
-  </form>
 
-
+  </div>
 </template>
-
+<!--  <div>-->
+<!--    <ul id="example-1">-->
+<!--      <li v-for="item in items" :key="item.username">-->
+<!--        {{ item.id }}-->
+<!--        {{ item.username }}-->
+<!--        {{ item.email }}-->
+<!--        {{ item.firstName }}-->
+<!--        {{ item.lastName }}-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--    <n-button type="info" @click="getAllUser">-->
+<!--      GET-->
+<!--    </n-button>-->
+<!--  </div>-->
 <script>
 
 import axios from "axios";
 import {NButton, NInput} from "naive-ui";
 
+const createColumns = () => {
+  return [
+    {
+      title: "ID",
+      key: "id"
+    },
+    {
+      title: "UserName",
+      key: "username"
+    },
+    {
+      title: "FirstNName",
+      key: "firstName"
+    },
+    {
+      title: "LastName",
+      key: "lastName",
+    },
+    {
+      title: "email",
+      key: "email",
+    }
+  ];
+};
+
 
 export default {
+  setup() {
+    return {
+      columns: createColumns({}),
+      pagination: false
+    };
+  },
   mounted() {
     this.checkAuthorization()
+    this.getAllUser()
   },
   components: {NButton, NInput},
 
@@ -50,7 +89,8 @@ export default {
         email: '',
         firstName: '',
         lastName: ''
-      }]
+      }],
+
     };
   },
 
@@ -67,6 +107,7 @@ export default {
       }).catch((error) => console.error(error))
 
     },
+
     hasRole(role) {
       if (localStorage.getItem('role') === role) {
         return true;
@@ -79,24 +120,21 @@ export default {
           'Authorization': `Bearer_${token}`
         }
       }).then((res) => {
-        // this.id = res.data.id
-        // this.username = res.data.username
-        // this.firstName = res.data.firstName
-        // this.lastName = res.data.lastName
-        // this.email = res.data.email
+
         console.log(res.data)
       }).catch((error) => console.error(error))
 
     },
     deleteUsers() {
       const token = localStorage.getItem('token')
-      axios.get('http://localhost:8085/api/v1/users/delete/' + this.id, {
+      axios.get('http://localhost:8085/api/v1/admin/users/delete/' + this.id, {
         headers: {
           'Authorization': `Bearer_${token}`
         }
       }).then((res) => {
         this.id = res.data.id
         console.log(res.data.id)
+        window.location.href = 'http://localhost:3000/admin';
       }).catch((error) => console.error(error))
 
     },
@@ -109,50 +147,30 @@ export default {
   },
 }
 </script>
-
 <style scoped>
-:deep(.desc) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 150px;
-  padding: 8px;
+.table {
+
+  padding: .25rem .5rem;
+  font-size: .875rem;
+  border-radius: .2rem;
+  box-sizing: border-box;
+  width: 80%;
+
+  margin: 0 auto;
+  border: 1px solid black;
+  background-color: #FFFFFF32;
 }
 
-:deep(.n-data-table-td) {
-  padding: 10px;
-}
-
-:deep(.date) {
-  max-width: 100px !important;
-  padding: 8px;
-}
-
-:deep(.title) {
-  max-width: 160px;
-}
-
-.textHide {
-  font-size: 22px;
-  max-width: 300px;
-  text-align: center;
-  padding: 40px;
+.even-row-color {
+  width: 30%;
+  height: 30px;
   display: block;
+
+  margin: 0 auto;
+  border: 1px solid black;
+  background-color: #FFFFFF32;
+
 }
 
-.hideItems {
-  text-align: center;
-}
 
-.col {
-  font-size: 18px;
-  text-align: center;
-  padding: 10px;
-  display: block;
-}
-
-.visibleItems {
-  text-align: center;
-  padding: 20px;
-}
 </style>

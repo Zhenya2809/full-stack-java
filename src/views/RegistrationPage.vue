@@ -81,7 +81,7 @@ export default {
       console.log(data)
       axios.post('http://localhost:8085/api/v1/users/registration', data).then(response => {
         this.req = response.data
-        window.location.href = 'http://172.20.10.7:8080/login';
+        window.location.href = 'http://localhost:3000/login';
         this.message = response.data.result
 
       })
