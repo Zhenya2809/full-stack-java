@@ -3,13 +3,37 @@ import Home from "@/views/HomePage.vue";
 import About from "@/views/AboutPage.vue";
 import Login from "@/views/LoginPage.vue";
 import Registration from "@/views/RegistrationPage";
-import Admin from "@/views/AdminPage.vue";
-import DoctorsMenuPage from "@/views/doctorsMenuPage";
+import DoctorsMenu from "@/views/DoctorsMenuPage";
+import UserProfile from "@/views/UserProfilePage";
+import ChoseDoctor from "@/views/ChoseDoctorPage";
+import Admin from "@/views/AdminPage";
+import UserMenu from "@/views/UsersMenuPage";
+import CalendarAppointmentPage from "@/views/CalendarAppointmentPage";
+import myAppointmentPage from "@/views/MyAppointmentPage";
+
+
+
 
 const routes = [
     {
         path: "/",
         component: Home,
+    },
+    {
+        path: "/myAppointment",
+        component: myAppointmentPage,
+    },
+    {
+        path: "/profile",
+        component: UserProfile,
+    },
+    {
+        path: "/choseDoctor/:speciality?",
+        component: ChoseDoctor,
+    },
+    {
+        path: "/calendarAppointment/:id?",
+        component: CalendarAppointmentPage,
     },
     {
         path: "/about",
@@ -21,15 +45,19 @@ const routes = [
     },
     {
         path: "/registration",
-        component: Registration
+        component: Registration,
     },
     {
         path: "/admin",
-        component: Admin
+        component: Admin,
     },
     {
         path: "/doctorsMenu",
-        component: DoctorsMenuPage
+        component: DoctorsMenu,
+    },
+    {
+        path: "/usersMenu",
+        component: UserMenu,
     }
 
 ];

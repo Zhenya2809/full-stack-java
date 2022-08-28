@@ -1,144 +1,45 @@
 <template>
-  <h1>Users MENU </h1>
-  <div v-if="hasRole('ROLE_ADMIN')">
-    <n-data-table class="table"
-                  :columns="columns"
-                  :data="items"
-                  :pagination="pagination"
-                  :bordered="false"
-    />
-
-
-    <n-form-item class="form-control" path="id">
-      <n-input class="even-row-color" v-model:value="id" placeholder="id"/>
-    </n-form-item>
-    <n-button type="error" @click="deleteUsers">
-      DELETE
+  <h1>Home Page</h1>
+  <div v-if="hasRole('ROLE_ADMIN')">Отправить уведомления клиентам
+    <n-button type="success" @click="sendEmailReminder()">
+      Send reminder
     </n-button>
 
+
   </div>
+  <div v-if="hasRole('ROLE_USER')">Хуйня яку бачить тільки роль USER_ROLE</div>
 </template>
-<!--  <div>-->
-<!--    <ul id="example-1">-->
-<!--      <li v-for="item in items" :key="item.username">-->
-<!--        {{ item.id }}-->
-<!--        {{ item.username }}-->
-<!--        {{ item.email }}-->
-<!--        {{ item.firstName }}-->
-<!--        {{ item.lastName }}-->
-<!--      </li>-->
-<!--    </ul>-->
-<!--    <n-button type="info" @click="getAllUser">-->
-<!--      GET-->
-<!--    </n-button>-->
-<!--  </div>-->
 <script>
 
-import axios from "axios";
-import {NButton, NInput} from "naive-ui";
-
-const createColumns = () => {
-  return [
-    {
-      title: "ID",
-      key: "id"
-    },
-    {
-      title: "UserName",
-      key: "username"
-    },
-    {
-      title: "FirstNName",
-      key: "firstName"
-    },
-    {
-      title: "LastName",
-      key: "lastName",
-    },
-    {
-      title: "email",
-      key: "email",
-    }
-  ];
-};
-
-
+import {NButton} from "naive-ui";
+import api from "@/interceptors/axios";
 export default {
-  setup() {
-    return {
-      columns: createColumns({}),
-      pagination: false
-    };
-  },
   mounted() {
     this.checkAuthorization()
-    this.getAllUser()
   },
-  components: {NButton, NInput},
-
-  name: "AboutPages",
+  components: {NButton},
+  name: "LoginHyi",
 
   data() {
     return {
-      token: null,
-      hideContent: true,
-      id: '',
-      items: [{
-        id: '',
-        username: '',
-        email: '',
-        firstName: '',
-        lastName: ''
-      }],
+      hideContent: false,
 
-    };
+    }
   },
 
   methods: {
-    getAllUser() {
-      const token = localStorage.getItem('token')
-      axios.get('http://localhost:8085/api/v1/admin/users/search', {
-        headers: {
-          'Authorization': `Bearer_${token}`
-        }
-      }).then((res) => {
-        this.items = res.data
-        console.log(res.data)
-      }).catch((error) => console.error(error))
-
-    },
-
     hasRole(role) {
       if (localStorage.getItem('role') === role) {
-        return true;
+        return true
       }
     },
-    getUsers() {
-      const token = localStorage.getItem('token')
-      axios.get('http://localhost:8085/api/v1/users/' + this.id, {
-        headers: {
-          'Authorization': `Bearer_${token}`
-        }
-      }).then((res) => {
 
-        console.log(res.data)
+    sendEmailReminder() {
+
+      api.get('http://localhost:8085/api/v1/admin/sendEmailReminder', {
       }).catch((error) => console.error(error))
 
     },
-    deleteUsers() {
-      const token = localStorage.getItem('token')
-      axios.get('http://localhost:8085/api/v1/admin/users/delete/' + this.id, {
-        headers: {
-          'Authorization': `Bearer_${token}`
-        }
-      }).then((res) => {
-        this.id = res.data.id
-        console.log(res.data.id)
-        window.location.href = 'http://localhost:3000/admin';
-      }).catch((error) => console.error(error))
-
-    },
-
     checkAuthorization() {
       if (localStorage.getItem('token') == null && localStorage.getItem('role') === "admin") {
         this.hideContent = false
@@ -148,29 +49,17 @@ export default {
 }
 </script>
 <style scoped>
-.table {
+footer {
 
-  padding: .25rem .5rem;
-  font-size: .875rem;
-  border-radius: .2rem;
-  box-sizing: border-box;
-  width: 80%;
-
-  margin: 0 auto;
-  border: 1px solid black;
-  background-color: #FFFFFF32;
-}
-
-.even-row-color {
-  width: 30%;
-  height: 30px;
-  display: block;
-
-  margin: 0 auto;
-  border: 1px solid black;
-  background-color: #FFFFFF32;
+  text-align: center;
+  font-weight: bold;
+  float: right;
+  line-height: 115px;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 981px;
+  margin: 0 auto 8px;
+  text-shadow: 0 1px 0 #fff;
+  background-color: #ffb347;
 
 }
-
-
 </style>

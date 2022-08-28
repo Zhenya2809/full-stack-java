@@ -36,26 +36,30 @@
 </template>
 <script>
 
-import axios from "axios";
+import api from "@/interceptors/axios";
 import {NButton, NInput} from "naive-ui";
 
 const createColumns = () => {
   return [
     {
       title: "ID",
-      key: "id"
+      key: "id",
+      minWidth: '55px'
     },
     {
       title: "Doctors FIO",
-      key: "doctorFIO"
+      key: "doctorFIO",
+      minWidth: '100px'
     },
     {
       title: "Speciality",
-      key: "speciality"
+      key: "speciality",
+      minWidth: '100px'
     },
     {
       title: "About",
-      key: "about"
+      key: "about",
+      minWidth: '100px'
     },
     {
       title: "LinkPhoto",
@@ -102,12 +106,8 @@ export default {
 
   methods: {
     deleteDoctors() {
-      const token = localStorage.getItem('token')
-      axios.get('http://localhost:8085/api/v1/admin/doctors/delete/' + this.id, {
-        headers: {
-          'Authorization': `Bearer_${token}`
-        }
-      }).then((res) => {
+
+      api.get('http://localhost:8085/api/v1/admin/doctors/delete/' + this.id, {}).then((res) => {
         this.id = res.data.id
         console.log(res.data.id)
         window.location.href = 'http://localhost:3000/doctorsMenu';
@@ -115,12 +115,8 @@ export default {
 
     },
     getAllDoctor() {
-      const token = localStorage.getItem('token')
-      axios.get('http://localhost:8085/api/v1/admin/doctors/search', {
-        headers: {
-          'Authorization': `Bearer_${token}`
-        }
-      }).then((res) => {
+
+      api.get('http://localhost:8085/api/v1/admin/doctors/search', {}).then((res) => {
         this.items = res.data
         console.log(res.data)
       }).catch((error) => console.error(error))
@@ -135,11 +131,7 @@ export default {
 
       }
       console.log(data)
-      const token = localStorage.getItem('token')
-      axios.post('http://localhost:8085/api/v1/admin/saveDoctor', data, {
-        headers: {
-          'Authorization': `Bearer_${token}`
-        }
+      api.post('http://localhost:8085/api/v1/admin/saveDoctor', data, {
       }).then(response => {
         this.req = response.data
         window.location.href = 'http://localhost:3000/doctorsMenu';
@@ -174,7 +166,10 @@ export default {
   border: 1px solid black;
   background-color: #FFFFFF32;
 }
-.table > tbody > tr > td:first-child { white-space: nowrap; }
+
+.table > tbody > tr > td:first-child {
+  white-space: nowrap;
+}
 
 .even-row-color {
   width: 30%;

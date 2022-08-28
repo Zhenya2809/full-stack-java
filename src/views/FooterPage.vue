@@ -1,8 +1,8 @@
 <template>
 <footer>
-  <p>
+  <H5>
     {{footerText}}
-  </p>
+  </H5>
 </footer>
 </template>
 
@@ -11,7 +11,7 @@ export default {
   name: "FooterPage",
   data(){
     return{
-      footerText: 'My footer'
+      footerText: 'ClinicName  | 2022 Kyiv'
     }
   }
 }

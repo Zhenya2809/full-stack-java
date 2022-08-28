@@ -7,24 +7,24 @@
 
 
   </div>
-  <div v-if="hasRole('ROLE_USER')">Хуйня яку бачить тільки роль USER_ROLE</div>
+
 </template>
 <script>
 
 import {NButton} from "naive-ui";
-import axios from "axios";
+import api from "@/interceptors/axios";
+
 
 export default {
+  setup() {
+  },
   mounted() {
-    this.checkAuthorization()
   },
   components: {NButton},
   name: "LoginHyi",
 
   data() {
     return {
-      hideContent: false,
-
     }
   },
 
@@ -36,19 +36,9 @@ export default {
     },
 
     sendEmailReminder() {
-      const token = localStorage.getItem('token')
-      axios.get('http://localhost:8085/api/v1/admin/sendEmailReminder', {
-        headers: {
-          'Authorization': `Bearer_${token}`
-        }
-      }).catch((error) => console.error(error))
+      api.get('http://localhost:8085/api/v1/admin/sendEmailReminder', {}).catch((error) => console.error(error))
 
     },
-    checkAuthorization() {
-      if (localStorage.getItem('token') == null && localStorage.getItem('role') === "admin") {
-        this.hideContent = false
-      }
-    }
   },
 }
 </script>
@@ -65,5 +55,21 @@ footer {
   text-shadow: 0 1px 0 #fff;
   background-color: #ffb347;
 
+}
+
+:deep(.doctorSpeciality) {
+  color: rgb(230, 238, 253) !important;
+}
+
+:deep(.doctorFIO) {
+  color: rgb(230, 238, 253) !important;
+}
+
+:deep(.date) {
+  color: rgb(230, 238, 253) !important;
+}
+
+:deep(.time) {
+  color: rgb(230, 238, 253) !important;
 }
 </style>

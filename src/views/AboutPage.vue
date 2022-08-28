@@ -1,42 +1,35 @@
 <template>
   <h1 >About Page</h1>
-  <div v-if="hasRole('ROLE_USER')">
-    <div class="row">
-      <div class="col">{{ id }}
-      </div>
-      <div class="col">{{ username }}
-      </div>
-      <div class="col">{{ firstName }}
-      </div>
-      <div class="col">{{ lastName }}
-      </div>
-      <div class="col">{{ email }}
-      </div>
-    </div>
-    <n-form-item label="username" path="username">
-      <n-input v-model:value="id" placeholder="id"/>
-    </n-form-item>
-    <n-button type="info" @click="getUsers">
-      GET
-    </n-button>
+  <div v-if="hasRole('ROLE_USER')" class="background">
+    <n-card class="n-card" title="CLINIC_NAME — это частная клиника в Киеве для всей семьи.">
+      <template #cover>
+        <img src="https://archixod.ru/sites/default/files/styles/1920x1080/public/resepshn_variant_no2_oblozhka_proekta.jpg?itok=wn1mIjjN">
+      </template>
+
+      <h3 class="background">Мы позаботимся как о новорожденном ребенке, так и о людях почтенного возраста.
+      Мы предоставляем медицинские услуги с выездом на дом, в клинике и онлайн,
+      чтобы всегда держать под контролем ваше хорошее самочувствие.
+
+      <p class="background"> Найти нас очень просто!</p>
+      <p class="background"> Киев, ул. Вацлава Гавела 9а
+      или позвонить нам 📞 +38(077)-777-77-77</p></h3>
+
+    </n-card>
+    <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5081.480686027478!2d30.425587000000004!3d50.445937!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb340c7a660b369ad!2zNTDCsDI2JzQ1LjQiTiAzMMKwMjUnMzIuMSJF!5e0!3m2!1sru!2sua!4v1659601629725!5m2!1sru!2sua" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
-
-
-
-
 </template>
 
 <script>
 
-import axios from "axios";
-import {NButton, NInput } from 'naive-ui'
+
+import {NCard} from 'naive-ui'
 
 export default {
   mounted() {
     this.checkAuthorization()
   },
   components: {
-    NButton, NInput
+  NCard
   },
 
   name: "AboutPages",
@@ -61,22 +54,6 @@ export default {
       }
     },
 
-    getUsers() {
-      const token = localStorage.getItem('token')
-      axios.get('http://localhost:8085/api/v1/users/' + this.id, {
-        headers: {
-          'Authorization': `Bearer_${token}`
-        }
-      }).then((res) => {
-        this.id = res.data.id
-        this.username = res.data.username
-        this.firstName = res.data.firstName
-        this.lastName = res.data.lastName
-        this.email = res.data.email
-        console.log(res.data)
-      }).catch((error) => console.error(error))
-
-    },
 
     checkAuthorization() {
       if (localStorage.getItem('token') == null&& localStorage.getItem('role')==="admin") {
@@ -88,41 +65,23 @@ export default {
 </script>
 
 <style scoped>
-:deep(.desc) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 150px;
-  padding: 8px;
-}
-:deep(.n-data-table-td) {
-  padding: 10px;
-}
-:deep(.date) {
-  max-width: 100px !important;
-  padding: 8px;
-}
-:deep(.title) {
-  max-width: 160px;
-}
-.textHide {
-  font-size: 22px;
-  max-width: 300px;
-  text-align: center;
-  padding: 40px;
+
+.background{
+
   display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
 }
-.hideItems {
-  text-align: center;
+/*.card {*/
+/*  display: block;*/
+/*  margin-left: auto;*/
+/*  margin-right: auto;*/
+/*  width: 60%;*/
+/*}*/
+.map{
+  width: 100%;
+  height: 700px ;
 }
-.col{
-  font-size: 18px;
-  text-align: center;
-  padding: 10px;
-  display: block;
-}
-.visibleItems{
-  text-align: center;
-  padding: 20px;
-}
+
 </style>
