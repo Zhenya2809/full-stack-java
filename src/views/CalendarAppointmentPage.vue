@@ -15,11 +15,11 @@
     <n-gradient-text gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)" v-if="time!==''" size="77">
       PICK THE FREE TIME
     </n-gradient-text>
-      <div class="cards">
-        <button class="button" v-for="item in items" :key="item.time" @click="choseTime(item.time)">
-          {{ item.time }}
-        </button>
-      </div>
+    <div class="cards">
+      <button class="button" v-for="item in items" :key="item.time" @click="choseTime(item.time)" :disabled=attribute>
+        {{ item.time }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -46,10 +46,11 @@ export default {
   data() {
     return {
       id: '',
-      hideContent: false,
+
       req: '',
       role: '',
       token: null,
+      attribute: false,
       time: '',
       items: [{
         times: '123',
@@ -100,7 +101,9 @@ export default {
       localStorage.setItem('time', time)
       const docId = localStorage.getItem('docId')
       const date = localStorage.getItem('date')
+      this.attribute = true
       api.get('http://localhost:8085/api/v1/users/getdate/' + docId + '/' + date + '/' + time, {})
+
           .then(() => {
 
             console.log('localstorage removed')

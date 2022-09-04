@@ -1,16 +1,20 @@
 <template>
 
   <div v-if="hasRole('ROLE_ADMIN')">
-    <h1>PROFILEs MENU </h1>
+    <h1>Patient cards MENU </h1>
     <n-data-table class="table"
                   :columns="columns"
                   :data="items"
                   :pagination="pagination"
                   :bordered="false"
     />
-
+    <n-form-item class="form-control" path="id">
+      <n-input class="even-row-color" v-model:value="id" placeholder="id"/>
+    </n-form-item>
+    <n-button type="error" @click="deletePatientCard">
+      DELETE
+    </n-button>
   </div>
-
   <div v-if="hasRole('ROLE_USER')">
     <h1>MY PROFILE MENU </h1>
     <n-data-table class="table"
@@ -27,7 +31,7 @@
 
       <n-gradient-text gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)" size="20">
         <label><i class="icon-lock"></i></label>
-        <n-date-picker v-model:value="birthday"/>
+        <n-date-picker v-model:value="birthday" value=""/>
         <label><i class="icon-lock"></i> </label>
         <n-input v-model:value="placeOfResidence" type="text" name="username" placeholder="placeOfResidence"
                  size="large"
@@ -54,9 +58,14 @@
 <script>
 import api from "@/interceptors/axios";
 import {NInput} from 'naive-ui'
+import axios from "axios";
 
 const createColumns = () => {
   return [
+    {
+      title: "ID",
+      key: "id"
+    },
     {
       title: "FIO",
       key: "fio"
@@ -86,7 +95,6 @@ const createColumns = () => {
       key: "phoneNumber",
     },
   ];
-
 };
 
 export default {
@@ -120,18 +128,21 @@ export default {
 
       ]),
       birthday: null,
+      test: "text",
       insurancePolicy: null,
       placeOfResidence: null,
       sex: 'male',
       phoneNumber: null,
+      id: null,
       items: [{
-        birthday: '',
-        insurancePolicy: '',
-        placeOfResidence: '',
-        sex: '',
-        phoneNumber: '',
-        fio: '',
-        email: '',
+        id:null,
+        birthday: null,
+        insurancePolicy: null,
+        placeOfResidence: null,
+        sex: null,
+        phoneNumber: null,
+        fio: null,
+        email: null,
       }],
     }
   },
@@ -152,6 +163,17 @@ export default {
           console.log(res.data)
         }).catch((error) => console.error(error))
       }
+    },
+    deletePatientCard() {
+      const token = localStorage.getItem('token')
+      axios.get('http://localhost:8085/api/v1/admin/patientCard/delete/' + this.id, {
+        headers: {
+          'Authorization': `Bearer_${token}`
+        }
+      }).then(() => {
+        window.location.href = 'http://localhost:3000/profile';
+      }).catch((error) => console.error(error))
+
     },
     reload() {
       window.location.reload()
@@ -175,10 +197,12 @@ export default {
       if (localStorage.getItem('token') == null && localStorage.getItem('role') === "admin") {
         this.hideContent = false
       }
+
     },
     handleUpdateValue({year, month, date}) {
       console.log(`${year}-${month}-${date}`)
     },
+
 
     hasRole(role) {
       if (localStorage.getItem('role') === role) {
@@ -193,5 +217,15 @@ export default {
 .form-2 {
   color: red;
 }
+.even-row-color {
+  width: 30%;
+  height: 30px;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid black;
+  --n-color-focus: red;
+
+}
+
 
 </style>

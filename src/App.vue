@@ -3,38 +3,42 @@
     <div id="app" class="main-container"><br><br><br><br><br><br>
       <HeaderPage/>
       <nav>
-        <ul>
-          <a v-if="hasRole('ROLE_USER')">
-            <router-link to="/" exact>Home</router-link>
-          </a>
-          <a v-if="hasRole('ROLE_USER')">
-            <router-link to="/choseDoctor">Chose Dr.</router-link>
-          </a>
-          <a v-if="hasRole('ROLE_USER')">
-            <router-link to="/about">About</router-link>
-          </a>
-          <a v-if="hasRole('ROLE_USER')">
-            <router-link to="/profile">My Profile</router-link>
-          </a>
-          <a v-if="hasRole('ROLE_ADMIN')">
-            <router-link to="/profile">PROFILES</router-link>
-          </a>
-          <a v-if="hasRole('ROLE_ADMIN')">
-            <router-link to="/usersMenu">USERS</router-link>
-          </a>
-          <a v-if="hasRole('ROLE_ADMIN')">
-            <router-link to="/doctorsMenu">DOCTORS</router-link>
-          </a>
-          <a v-if="hasRole('ROLE_ADMIN')">
-            <router-link to="/admin">ADMIN</router-link>
-          </a>
-          <a v-if="hideContent">
-            <router-link to="/login">Log-in</router-link>
-          </a>
-          <a>
-            <router-link to="/login" @click="logOut">Log-out</router-link>
-          </a>
-        </ul>
+
+
+        <router-link v-if="hasRole('ROLE_USER')" to="/" exact>Home</router-link>
+
+
+        <router-link v-if="hasRole('ROLE_USER')" to="/myAppointment" exact>Appointments</router-link>
+
+
+        <router-link v-if="hasRole('ROLE_USER')" to="/choseDoctor">Chose Dr.</router-link>
+
+
+        <router-link v-if="hasRole('ROLE_USER')" to="/about">About</router-link>
+
+
+        <router-link v-if="hasRole('ROLE_USER')" to="/profile">My Profile</router-link>
+
+
+        <router-link v-if="hasRole('ROLE_ADMIN')" to="/profile">PROFILES</router-link>
+
+
+        <router-link v-if="hasRole('ROLE_ADMIN')" to="/usersMenu">USERS</router-link>
+
+
+        <router-link v-if="hasRole('ROLE_ADMIN')" to="/doctorsMenu">DOCTORS</router-link>
+
+
+        <router-link v-if="hasRole('ROLE_ADMIN')" to="/admin">ADMIN</router-link>
+
+
+        <router-link v-if="hideContent" to="/login" class="login">Log-in</router-link>
+
+        <router-link v-if="hasRole('ROLE_DOCTOR')" to="/appointments" exact>Appointments</router-link>
+
+        <router-link to="/login" @click="logOut" class="logout">Log-out</router-link>
+
+
       </nav>
       <router-view></router-view>
       <FooterPage/>
@@ -68,19 +72,21 @@ export default {
       darkTheme,
       themeOverrides: {
         common: {
-          primaryColor: 'rgba(17,253,0,0.82)',
-          placeholderColor: "rgb(43,43,44)",
+          pressedColor: "rgba(234,2,2,0.82)",
+          primaryColor: 'rgb(230,238,253)',
+          placeholderColor: "rgb(5,5,5)",
           textColorBase: "#fff",
-          textColor1: "rgba(255, 255, 255, 0.9)",
-          inputColor: "rgba(255, 255, 255, 0.1)",
+          textColor1: "rgb(250,0,0)",
+          inputColor: "rgb(230,238,253)",
+          clearColorPressed: "rgb(250,0,0)",
         },
         Button: {
-          textColor: '#FF0000'
+          textColor: '#e6eefd'
         },
         Select: {
           peers: {
             InternalSelection: {
-              textColor: '#2b2b2c'
+              textColor: 'rgb(43,43,44)'
             }
           }
         }
@@ -119,11 +125,12 @@ nav {
   margin: 27px auto 0;
 
   position: relative;
-  width: 790px;
+  width: 890px;
   height: 50px;
   background-color: rgb(64, 64, 70);
   border-radius: 8px;
   font-size: 0;
+  align-content: center;
 }
 
 nav a {
@@ -138,34 +145,73 @@ nav a {
   text-align: center;
   color: white;
   cursor: pointer;
+
 }
 
 a:nth-child(1) {
   width: 100px;
+
 }
 
 a:nth-child(2) {
-  width: 110px;
+  width: 150px;
+
 }
 
 a:nth-child(3) {
   width: 100px;
+
 }
 
 a:nth-child(4) {
-  width: 160px;
+  width: 100px;
+
 }
 
 a:nth-child(5) {
-  width: 120px;
+  width: 100px;
+
 }
 
+a:nth-child(6) {
+  width: 200px;
+
+}
+
+a:nth-child(7) {
+  width: 100px;
+
+}
+
+a:nth-child(8) {
+  width: 100px;
+
+}
+
+a:nth-child(9) {
+  width: 100px;
+
+}
+a:nth-child(10) {
+  width: 100px;
+
+}
 
 body {
   font-size: 12px;
   font-family: sans-serif;
   /*background: #2f2f60 url('http://i.imgur.com/bT2gl.png') left top;*/
   background: rgba(25, 25, 25, 0.93);
+}
+
+.logout {
+  color: red;
+  font-style: oblique;
+}
+
+.login {
+  color: #03f503;
+  font-style: oblique;
 }
 
 #app {

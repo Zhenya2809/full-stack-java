@@ -1,17 +1,10 @@
 <template>
   <h1>Home Page</h1>
-  <div v-if="hasRole('ROLE_ADMIN')">Отправить уведомления клиентам
-    <n-button type="success" @click="sendEmailReminder()">
-      Send reminder
-    </n-button>
 
-
-  </div>
 
 </template>
 <script>
 
-import {NButton} from "naive-ui";
 import api from "@/interceptors/axios";
 
 
@@ -20,7 +13,7 @@ export default {
   },
   mounted() {
   },
-  components: {NButton},
+  components: {},
   name: "LoginHyi",
 
   data() {

@@ -7,20 +7,20 @@
     <h1><span class="log-in">Войти</span> или <span class="sign-up">зарегистрироваться</span></h1>
     <p class="float">
       <label><i class="icon-user"></i>Login</label>
-      <n-input v-model:value="username" type="text" name="userName" autocomplete="off"/>
+      <n-input v-model:value="username" type="text" placeholder="login" name="userName" autocomplete="name"/>
     </p>
     <p class="float">
       <label><i class="icon-user"></i>Email</label>
-      <n-input v-model:value="email" type="text" name="email" placeholder=""/>
+      <n-input v-model:value="email" type="text" name="email" placeholder="email"/>
     </p>
     <p class="float">
       <label><i class="icon-user"></i>FirstName</label>
-      <n-input v-model:value="firstName" type="text" name="firstName" placeholder="" autocomplete="family-name"/>
+      <n-input v-model:value="firstName" type="text" name="firstName" placeholder="firstName" autocomplete="family-name"/>
     </p>
 
     <p class="float">
       <label><i class="icon-user"></i>lastName</label>
-      <n-input v-model:value="lastName" type="text" name="lastName" placeholder="" autocomplete="off"/>
+      <n-input v-model:value="lastName" type="text" name="lastName" placeholder="lastName" />
     </p>
 
 

@@ -15,7 +15,7 @@
       <div v-for="item in findBySpeciality" :key="item.id"  class="card">
         <router-link :to="'/calendarAppointment/'+item.id" @click="saveDocId(item.id)"><p>{{ item.docSpeciality }}</p>
 
-          <n-card :title=item.doctorFIO >
+          <n-card :title=item.doctorLastName+space+item.doctorFirstName >
 
             <img class="image" v-bind:src="item.linkPhoto" alt="doctors photo">
 
@@ -56,6 +56,7 @@ export default {
       message: '',
       req: '',
       role: '',
+      space: ' ',
       docId: '',
       token: null,
       specialitys: [{
@@ -63,7 +64,8 @@ export default {
       }],
       findBySpeciality: [{
         id: '',
-        doctorFIO: '',
+        doctorFirstName: '',
+        doctorLastName: '',
         speciality: '',
         about: '',
         linkPhoto: '',

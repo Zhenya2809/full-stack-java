@@ -3,13 +3,14 @@ import Home from "@/views/HomePage.vue";
 import About from "@/views/AboutPage.vue";
 import Login from "@/views/LoginPage.vue";
 import Registration from "@/views/RegistrationPage";
-import DoctorsMenu from "@/views/DoctorsMenuPage";
-import UserProfile from "@/views/UserProfilePage";
+import DoctorsMenu from "@/views/admins/DoctorsMenuPage";
 import ChoseDoctor from "@/views/ChoseDoctorPage";
 import Admin from "@/views/AdminPage";
 import UserMenu from "@/views/UsersMenuPage";
 import CalendarAppointmentPage from "@/views/CalendarAppointmentPage";
 import myAppointmentPage from "@/views/MyAppointmentPage";
+import AppointmentsUserForDoctorPage from "@/views/doctors/AppointmentsUserForDoctorPage";
+import UserProfilePage from "@/views/PatientCardPage";
 
 
 
@@ -24,8 +25,12 @@ const routes = [
         component: myAppointmentPage,
     },
     {
+        path: "/appointments",
+        component: AppointmentsUserForDoctorPage,
+    },
+    {
         path: "/profile",
-        component: UserProfile,
+        component: UserProfilePage,
     },
     {
         path: "/choseDoctor/:speciality?",

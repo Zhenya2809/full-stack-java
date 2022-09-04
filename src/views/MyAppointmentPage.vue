@@ -17,14 +17,19 @@ import api from "@/interceptors/axios";
 const createColumns = () => {
   return [
     {
-      title: "SPECIALITY",
+      title: "Speciality",
       key: "doctorSpeciality",
       className: 'doctorSpeciality'
     },
     {
-      title: "Doctor FIO",
-      key: "doctorFIO",
-      className: 'doctorFIO'
+      title: "FirstName",
+      key: "doctorFirstName",
+      className: 'doctorFirstName'
+    },
+    {
+      title: "LastName",
+      key: "doctorLastName",
+      minWidth: '100px'
     },
     {
       title: "Date",
@@ -59,7 +64,8 @@ export default {
         date: null,
         time: null,
         doctorSpeciality: null,
-        doctorFIO: null
+        doctorFirstName: null,
+        doctorLastName: null,
       }],
     }
   },

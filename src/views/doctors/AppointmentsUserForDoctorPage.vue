@@ -1,6 +1,6 @@
 <template>
-  <h1>Users MENU </h1>
-  <div v-if="hasRole('ROLE_ADMIN')">
+  <h1>Appointments MENU </h1>
+  <div v-if="hasRole('ROLE_DOCTOR')">
     <n-data-table class="table"
                   :columns="columns"
                   :data="items"
@@ -45,6 +45,10 @@ const createColumns = () => {
     {
       title: "email",
       key: "email",
+    },
+    {
+      title: "userId",
+      key: "userId",
     }
   ];
 };
@@ -63,20 +67,20 @@ export default {
   },
   components: {NButton, NInput},
 
-  name: "AboutPages",
+  name: "AppointmentsUserForDoctorPage",
 
   data() {
     return {
       token: null,
       hideContent: true,
       id: null,
-
       items: [{
-        id: '',
-        username: '',
-        email: '',
-        firstName: '',
-        lastName: ''
+        id: null,
+        username: null,
+        email: null,
+        firstName: null,
+        lastName: null,
+        userId: null,
       }],
 
     };

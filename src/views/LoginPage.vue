@@ -2,16 +2,15 @@
   <form class="form-2" @submit.prevent="onSubmit">
     <h1><span class="log-in">Войти</span> или <span class="sign-up">зарегистрироваться</span></h1>
     <p class="float">
-      <label><i class="icon-user"></i>Логин</label>
-      <n-input v-model:value="username" type="text" name="username" placeholder="Логин" size="large" round />
+
+      <n-input v-model:value="username" type="text"  placeholder="login" name="userName" size="large" round />
     </p>
     <p class="float">
-      <label><i class="icon-lock"></i>Пароль</label>
+
       <n-input v-model:value="password"
                round
-               placeholder="password"
+               placeholder="Password"
                type="password"
-
                show-password-on="mousedown"
                :minlength="8"
                :maxlength="16"/>
