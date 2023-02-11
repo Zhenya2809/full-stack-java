@@ -1,5 +1,5 @@
 <template>
-  <h1 >About Page</h1>
+  <h1 >ПРО НАС</h1>
   <div v-if="hasRole('ROLE_USER')" class="background">
     <n-card class="n-card" title="CLINIC_NAME — это частная клиника в Киеве для всей семьи.">
       <template #cover>

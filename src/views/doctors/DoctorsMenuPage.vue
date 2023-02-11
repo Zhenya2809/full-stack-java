@@ -1,5 +1,5 @@
 <template>
-  <h1>Doctors MENU </h1>
+  <h1> Всі лікарі </h1>
 
   <div v-if="hasRole('ROLE_ADMIN')">
     <n-data-table class="table"
@@ -8,43 +8,50 @@
                   :pagination="pagination"
                   :bordered="false"
     />
+    <h1> Видалити лікаря </h1>
     <n-form-item path="id">
-      <n-input class="even-row-color" v-model:value="id" placeholder="id"/>
+      <n-input class="even-row-color" v-model:value="id" placeholder="введіть id лікаря"/>
     </n-form-item>
+
+    <div class="button">
     <n-button type="error" @click="deleteDoctors">
       DELETE
     </n-button>
-    <n-form-item path="id">
-      <n-input class="even-row-color" v-model:value="doctorFirstName" placeholder="doctor firstName"/>
+    </div>
+    <h1> Додавання лікаря </h1>
+    <n-form-item >
+      <n-input class="even-row-color" v-model:value="doctorFirstName" placeholder="Ім'я лікаря"/>
     </n-form-item>
-    <n-form-item path="id">
-      <n-input class="even-row-color" v-model:value="doctorLastName" placeholder="doctor lastName"/>
-    </n-form-item>
-
-    <n-form-item path="id">
-      <n-input class="even-row-color" v-model:value="about" placeholder="about"/>
-    </n-form-item>
-    <n-form-item path="id">
-      <n-input class="even-row-color" v-model:value="linkPhoto" placeholder="link to photo"/>
+    <n-form-item >
+      <n-input class="even-row-color" v-model:value="doctorLastName" placeholder="Призвіще лікаря"/>
     </n-form-item>
 
-    <n-form-item path="id">
+    <n-form-item >
+      <n-input class="even-row-color" v-model:value="about" placeholder="Інформація про лікаря"/>
+    </n-form-item>
+    <n-form-item >
+      <n-input class="even-row-color" v-model:value="linkPhoto" placeholder="Ссилка на фото лікаря"/>
+    </n-form-item>
+
+    <n-form-item >
       <n-select class="even-row-color"  :options="selectOptions" v-model:value="speciality"/>
     </n-form-item>
-    <n-form-item path="id">
-      <n-input class="even-row-color" v-model:value="login" placeholder="username"/>
+    <h1> Створення акаунту для лікаря </h1>
+    <n-form-item >
+      <n-input class="even-row-color" v-model:value="login" placeholder="Логін"/>
 
 
-      <n-input class="even-row-color" type="password" v-model:value="password" placeholder="password"/>
+      <n-input class="even-row-color" type="password" v-model:value="password" placeholder="Пароль"/>
 
-      <n-input class="even-row-color" type="password" v-model:value="rePassword" placeholder="rePassword"/>
+      <n-input class="even-row-color" type="password" v-model:value="rePassword" placeholder="Повтор паролю"/>
 
-      <n-input class="even-row-color" v-model:value="email" placeholder="email"/>
+      <n-input class="even-row-color" v-model:value="email" placeholder="Емейл"/>
     </n-form-item>
+    <div class="button">
     <n-button type="success" @click="saveDoctor()">
       SAVE
     </n-button>
-
+    </div>
 
   </div>
   <div v-if="hasRole('ROLE_USER')">Доступ запрещен-----> USER_ROLE иди нахуй</div>
@@ -62,29 +69,29 @@ const createColumns = () => {
       minWidth: '55px'
     },
     {
-      title: "FirstName",
+      title: "Ім'я",
       key: "doctorFirstName",
       minWidth: '100px'
     },
     {
-      title: "LastName",
+      title: "Призвіще",
       key: "doctorLastName",
       minWidth: '100px'
     },
     {
-      title: "Speciality",
+      title: "Спеціальність",
       key: "speciality",
       minWidth: '100px'
     },
     {
-      title: "About",
+      title: "Про лікаря",
       key: "about",
       minWidth: '100px'
     },
-    {
-      title: "LinkPhoto",
-      key: "linkPhoto",
-    }
+    // {
+    //   title: "LinkPhoto",
+    //   key: "linkPhoto",
+    // }
   ];
 };
 
@@ -169,7 +176,6 @@ export default {
 
     },
     getAllDoctor() {
-
       api.get('http://localhost:8085/api/v1/admin/doctors/search', {}).then((res) => {
         this.items = res.data
         console.log(res.data)
@@ -213,31 +219,23 @@ export default {
 }
 </script>
 <style scoped>
-.table {
-
-  padding: .25rem .5rem;
-  font-size: .875rem;
-  border-radius: .2rem;
-  box-sizing: border-box;
-  width: 100%;
-
-  margin: 0 auto;
-  border: 1px solid black;
-
-}
-
-.table > tbody > tr > td:first-child {
-  white-space: nowrap;
-}
 
 .even-row-color {
   width: 30%;
   height: 30px;
   display: block;
   margin: 0 auto;
-  border: 1px solid rgb(43, 43, 44);
+  border: 1px solid black;
 
 
+}
+.table > tbody > tr > td:first-child {
+  white-space: nowrap;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
 }
 
 </style>

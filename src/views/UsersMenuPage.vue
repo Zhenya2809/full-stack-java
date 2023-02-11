@@ -1,5 +1,5 @@
 <template>
-  <h1>Users MENU </h1>
+  <h1>Меню користувачів </h1>
   <div v-if="hasRole('ROLE_ADMIN')">
     <n-data-table class="table"
                   :columns="columns"
@@ -8,14 +8,15 @@
                   :bordered="false"
     />
 
-
+    <h1>Введіть id користувача для видалення </h1>
     <n-form-item class="form-control" path="id">
       <n-input class="even-row-color" v-model:value="id" placeholder="id"/>
     </n-form-item>
-    <n-button type="error" @click="deleteUsers">
-      DELETE
-    </n-button>
-
+    <div class="button">
+      <n-button type="error" @click="deleteUsers">
+        DELETE
+      </n-button>
+    </div>
   </div>
 </template>
 
@@ -31,15 +32,15 @@ const createColumns = () => {
       key: "id"
     },
     {
-      title: "Login",
+      title: "Логін",
       key: "username"
     },
     {
-      title: "FirstName",
+      title: "Ім'я",
       key: "firstName"
     },
     {
-      title: "LastName",
+      title: "Призвіще",
       key: "lastName",
     },
     {
@@ -135,17 +136,6 @@ export default {
 }
 </script>
 <style scoped>
-.table {
-
-  padding: .25rem .5rem;
-  font-size: .875rem;
-  border-radius: .2rem;
-  box-sizing: border-box;
-  width: 90%;
-
-  margin: 0 auto;
-  border: 1px solid black;
-}
 
 .even-row-color {
   width: 30%;
@@ -155,6 +145,10 @@ export default {
   border: 1px solid black;
 
 
+}
+.button {
+  display: flex;
+  justify-content: center;
 }
 
 

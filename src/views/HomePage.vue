@@ -14,11 +14,10 @@ export default {
   mounted() {
   },
   components: {},
-  name: "LoginHyi",
+
 
   data() {
-    return {
-    }
+    return {}
   },
 
   methods: {
@@ -34,6 +33,7 @@ export default {
     },
   },
 }
+
 </script>
 <style scoped>
 footer {

@@ -1,6 +1,6 @@
 <template>
   <h1>Appointment Page</h1>
-  <div v-if="hasRole('ROLE_USER')" >
+  <div v-if="hasRole('ROLE_USER')" class="background">
     <n-data-table class="table"
                   :columns="columns"
                   :data="items"
@@ -87,5 +87,11 @@ export default {
 </script>
 
 <style scoped>
+.background {
 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
 </style>

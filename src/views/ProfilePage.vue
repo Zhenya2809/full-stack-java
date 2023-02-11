@@ -1,23 +1,27 @@
 <template>
 
   <div v-if="hasRole('ROLE_ADMIN')">
-    <h1>Patient cards MENU </h1>
+    <h1>Картки клієнтів </h1>
+
     <n-data-table class="table"
                   :columns="columns"
                   :data="items"
                   :pagination="pagination"
                   :bordered="false"
     />
+
     <n-form-item class="form-control" path="id">
       <n-input class="even-row-color" v-model:value="id" placeholder="id"/>
     </n-form-item>
-    <n-button type="error" @click="deletePatientCard">
-      DELETE
-    </n-button>
+    <div class="button">
+      <n-button type="error" @click="deletePatientCard" >
+        DELETE
+      </n-button>
+    </div>
   </div>
   <div v-if="hasRole('ROLE_USER')">
     <h1>MY PROFILE MENU </h1>
-    <n-data-table class="table"
+    <n-data-table class="background"
                   :columns="columns"
                   :data="items"
                   :pagination="pagination"
@@ -46,7 +50,7 @@
         <div>___________________________</div>
       </n-gradient-text>
       <p class="clearfix">
-        <a href="/" class="registration">APPOINTMENTS</a>
+        <a href="/myAppointment" class="registration">APPOINTMENTS</a>
         <input type="submit" name="submit" value="SAVE" @click="reload()">
 
       </p>
@@ -67,19 +71,19 @@ const createColumns = () => {
       key: "id"
     },
     {
-      title: "FIO",
+      title: "ПІБ",
       key: "fio"
     },
     {
-      title: "SEX",
+      title: "Стать",
       key: "sex"
     },
     {
-      title: "Place Of Resident",
+      title: "Місце народження",
       key: "placeOfResidence"
     },
     {
-      title: "InsurancePolicy",
+      title: "Страховий поліс",
       key: "insurancePolicy",
     },
     {
@@ -87,11 +91,11 @@ const createColumns = () => {
       key: "email",
     },
     {
-      title: "Birthday",
+      title: "Дата народження",
       key: "birthday",
     },
     {
-      title: "PhoneNumber",
+      title: "Номер телефону",
       key: "phoneNumber",
     },
   ];
@@ -135,7 +139,7 @@ export default {
       phoneNumber: null,
       id: null,
       items: [{
-        id:null,
+        id: null,
         birthday: null,
         insurancePolicy: null,
         placeOfResidence: null,
@@ -214,9 +218,25 @@ export default {
 </script>
 
 <style scoped>
-.form-2 {
-  color: red;
+.table {
+
+  padding: .25rem .5rem;
+  font-size: .875rem;
+  border-radius: .2rem;
+  box-sizing: border-box;
+  width: 90%;
+
+  margin: 0 auto;
+  border: 0px solid black;
 }
+
+.form-2 {
+  background: #e70707 url('https://i.ibb.co/PZB0b1X/223223.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
 .even-row-color {
   width: 30%;
   height: 30px;
@@ -225,7 +245,23 @@ export default {
   border: 1px solid black;
   --n-color-focus: red;
 
+
 }
 
+.background {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  border: 1px solid black;
+  background: #f5f5f5 url('https://i.ibb.co/PZB0b1X/223223.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+}
 
 </style>

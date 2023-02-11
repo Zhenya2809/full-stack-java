@@ -1,5 +1,5 @@
 <template>
-<footer>
+<footer >
   <H5>
     {{footerText}}
   </H5>
@@ -19,12 +19,19 @@ export default {
 
 <style scoped>
 footer{
-
+  font-size: calc(var(--index) / 1.175);
+  letter-spacing: calc(var(--index) / 19.5);
+  margin-top: calc(var(--index) * -.75);
+  transition: var(--transition);
+  will-change: transform;
+  text-transform: uppercase;
+  font-weight: 900;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   text-align: center;
-  font-weight: bold;
-  line-height: 115px;
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0 auto 8px;
+  color: var(--text);
+  text-shadow: 0 0 15px #f80202;
 
 }
 </style>

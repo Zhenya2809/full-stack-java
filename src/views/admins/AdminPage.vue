@@ -1,10 +1,12 @@
 <template>
-  <h1>Home Page</h1>
-  <div v-if="hasRole('ROLE_ADMIN')">Отправить уведомления клиентам
-    <n-button type="success" @click="sendEmailReminder()">
-      Send reminder
-    </n-button>
+  <h1>Відправити нагадування клієнтам на почту</h1>
+  <div v-if="hasRole('ROLE_ADMIN')">
+    <div class="button">
 
+      <n-button type="success" @click="sendEmailReminder()">
+        Send --->Email
+      </n-button>
+    </div>
 
   </div>
   <div v-if="hasRole('ROLE_USER')">Хуйня яку бачить тільки роль USER_ROLE</div>
@@ -13,6 +15,7 @@
 
 import {NButton} from "naive-ui";
 import api from "@/interceptors/axios";
+
 export default {
   mounted() {
     this.checkAuthorization()
@@ -36,8 +39,7 @@ export default {
 
     sendEmailReminder() {
 
-      api.get('http://localhost:8085/api/v1/admin/sendEmailReminder', {
-      }).catch((error) => console.error(error))
+      api.get('http://localhost:8085/api/v1/admin/sendEmailReminder', {}).catch((error) => console.error(error))
 
     },
     checkAuthorization() {
@@ -61,5 +63,14 @@ footer {
   text-shadow: 0 1px 0 #fff;
   background-color: #ffb347;
 
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+}
+
+.textdiv {
+  color: red;
 }
 </style>

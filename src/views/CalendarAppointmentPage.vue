@@ -1,26 +1,26 @@
 <template>
-  Hello
-
   <n-calendar class="text_1"
               v-model:value="value"
               #="{ year, month, date }"
               :is-date-disabled="isDateDisabled"
               @update:value="handleUpdateValue"
-              @click="scroll()"
   >
     {{ year }}-{{ month }}-{{ date }}
   </n-calendar>
-  <!--  <p>meeting Selected: {{ meeting ? meeting : 'No Meeting selected' }}</p>-->
+
   <div v-if="time!==''">
-    <n-gradient-text gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)" v-if="time!==''" size="77">
-      PICK THE FREE TIME
-    </n-gradient-text>
-    <div class="cards">
+    <div class="text">
+      <n-gradient-text gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)" v-if="time!==''" size="77">
+        Виберіть вільний час для запису
+      </n-gradient-text>
+    </div>
+    <div class="cards" id="id2">
       <button class="button" v-for="item in items" :key="item.time" @click="choseTime(item.time)" :disabled=attribute>
         {{ item.time }}
       </button>
     </div>
   </div>
+
 </template>
 
 
@@ -38,7 +38,6 @@ export default {
   },
   mounted() {
     this.checkAuthorization()
-
   },
 
   name: "CalendarAppointmentPage",
@@ -74,6 +73,18 @@ export default {
         return true
       }
     },
+    scroll() {
+      setTimeout(() => {
+        var dialog = document.querySelector('dialog');
+        document.querySelector('#openDialog').onclick = function () {
+          dialog.show();
+        }
+        document.querySelector('#closeDialog').onclick = function () {
+          dialog.close();
+        }
+      }, 150)
+    },
+
     handleUpdateValue(_, {year, month, date}) {
       console.log(`${year}-${month}-${date}`)
       const pickDate = (`${year}-${month}-${date}`)
@@ -86,7 +97,8 @@ export default {
             console.log(res.data)
             this.items = res.data
             this.time = res.data.time
-            scrollBy(1400, 1400)
+            // scrollBy(0, 823)
+            // window.location.href = '#id2';
           }).catch((error) => console.error(error))
     },
 
@@ -129,6 +141,19 @@ export default {
 /*span {*/
 /*  color: black;*/
 /*}*/
+.text {
+  display: flex;
+
+
+  justify-content: center;
+}
+
+.n-calendar text_1 {
+  --n-title-text-color: rgb(35 108 181);
+  color: red;
+
+}
+
 .button {
   scroll-behavior: smooth;
   border: none;

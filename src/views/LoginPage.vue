@@ -3,7 +3,7 @@
     <h1><span class="log-in">Войти</span> или <span class="sign-up">зарегистрироваться</span></h1>
     <p class="float">
 
-      <n-input v-model:value="username" type="text"  placeholder="login" name="userName" size="large" round />
+      <n-input v-model:value="phone" type="text" placeholder="phone" name="phone" size="large" round/>
     </p>
     <p class="float">
 
@@ -37,7 +37,7 @@ export default {
 
   data() {
     return {
-      username: '',
+      phone: '',
       password: '',
       token: '',
       role: '',
@@ -49,18 +49,18 @@ export default {
 
     onSubmit() {
       const data = {
-        username: this.username,
+        phone: this.phone,
         password: this.password,
 
       }
       console.log(data)
       axios.post('http://localhost:8085/api/v1/auth/login', data).then(response => {
-        localStorage.setItem('username',this.username)
+        localStorage.setItem('phone', this.phone)
         this.token = response.data
         localStorage.setItem('token', this.token.token)
         const decoded = jwt_decode(this.token.token);
         console.log('decoded', decoded)
-        this.role= decoded.roles
+        this.role = decoded.roles
         localStorage.setItem('role', this.role[0])
         window.location.href = 'http://localhost:3000/';
 
@@ -73,15 +73,16 @@ export default {
 </script>
 
 <style>
-.n-input .n-input__input-el{
-color: black;
+.n-input .n-input__input-el {
+  color: black;
 }
 
-.n-base-icon{
+.n-base-icon {
   color: red;
 }
+
 .n-input {
-  --n-color-focus:black;
+  --n-color-focus: black;
   color: black;
   text-decoration-color: black;
   -webkit-tap-highlight-color: transparent;
