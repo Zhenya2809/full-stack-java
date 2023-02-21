@@ -154,7 +154,7 @@ export default {
   methods: {
     getProfileAdmin() {
       if (localStorage.getItem('role') === 'ROLE_ADMIN') {
-        api.get('http://localhost:8085/api/v1/admin/myProfile', {}).then((res) => {
+        api.get('http://65.109.235.33:8085/api/v1/admin/myProfile', {}).then((res) => {
           this.items = res.data
           console.log(res.data)
         }).catch((error) => console.error(error))
@@ -162,7 +162,7 @@ export default {
     },
     getProfileUser() {
       if (localStorage.getItem('role') === 'ROLE_USER') {
-        api.get('http://localhost:8085/api/v1/users/myProfile', {}).then((res) => {
+        api.get('http://65.109.235.33:8085/api/v1/users/myProfile', {}).then((res) => {
           this.items = res.data
           console.log(res.data)
         }).catch((error) => console.error(error))
@@ -170,7 +170,7 @@ export default {
     },
     deletePatientCard() {
       const token = localStorage.getItem('token')
-      axios.get('http://localhost:8085/api/v1/admin/patientCard/delete/' + this.id, {
+      axios.get('http://65.109.235.33:8085/api/v1/admin/patientCard/delete/' + this.id, {
         headers: {
           'Authorization': `Bearer_${token}`
         }
@@ -193,7 +193,7 @@ export default {
       }
       console.log(data)
 
-      api.post('http://localhost:8085/api/v1/users/update', data, {})
+      api.post('http://65.109.235.33:8085/api/v1/users/update', data, {})
 
     },
 

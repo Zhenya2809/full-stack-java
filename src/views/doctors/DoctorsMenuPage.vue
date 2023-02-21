@@ -168,7 +168,7 @@ export default {
   methods: {
     deleteDoctors() {
 
-      api.delete('http://localhost:8085/api/v1/admin/doctors/delete/' + this.id, {}).then((res) => {
+      api.delete('http://65.109.235.33:8085/api/v1/admin/doctors/delete/' + this.id, {}).then((res) => {
         this.id = res.data.id
         console.log(res.data.id)
         window.location.href = 'http://localhost:8080/doctorsMenu';
@@ -176,7 +176,7 @@ export default {
 
     },
     getAllDoctor() {
-      api.get('http://localhost:8085/api/v1/admin/doctors/search', {}).then((res) => {
+      api.get('http://65.109.235.33:8085/api/v1/admin/doctors/search', {}).then((res) => {
         this.items = res.data
         console.log(res.data)
       }).catch((error) => console.error(error))
@@ -197,7 +197,7 @@ export default {
 
       }
       console.log(data)
-      api.post('http://localhost:8085/api/v1/admin/saveDoctor', data, {}).then(response => {
+      api.post('http://65.109.235.33:8085/api/v1/admin/saveDoctor', data, {}).then(response => {
         this.req = response.data
         window.location.href = 'http://localhost:8080/doctorsMenu';
         this.message = response.data.result

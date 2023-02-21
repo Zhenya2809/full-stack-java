@@ -86,7 +86,7 @@ export default {
   methods: {
     getAllUser() {
       const token = localStorage.getItem('token')
-      axios.get('http://localhost:8085/api/v1/admin/users/search', {
+      axios.get('http://65.109.235.33:8085/api/v1/admin/users/search', {
         headers: {
           'Authorization': `Bearer_${token}`
         }
@@ -103,7 +103,7 @@ export default {
     },
     getUsers() {
       const token = localStorage.getItem('token')
-      axios.get('http://localhost:8085/api/v1/users/' + this.id, {
+      axios.get('http://65.109.235.33:8085/api/v1/users/' + this.id, {
         headers: {
           'Authorization': `Bearer_${token}`
         }
@@ -115,7 +115,7 @@ export default {
     },
     deleteUsers() {
       const token = localStorage.getItem('token')
-      axios.get('http://localhost:8085/api/v1/admin/users/delete/' + this.id, {
+      axios.get('http://65.109.235.33:8085/api/v1/admin/users/delete/' + this.id, {
         headers: {
           'Authorization': `Bearer_${token}`
         }

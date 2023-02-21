@@ -98,7 +98,7 @@ export default {
       const docId = localStorage.getItem('docId')
       localStorage.setItem('date', pickDate)
       localStorage.setItem('docId', this.$route.params.id)
-      api.get('http://localhost:8085/api/v1/users/appointment/' + pickDate + '/' + docId, {})
+      api.get('http://65.109.235.33:8085/api/v1/users/appointment/' + pickDate + '/' + docId, {})
           .then((res) => {
 
             console.log(res.data)
@@ -121,7 +121,7 @@ export default {
       const docId = localStorage.getItem('docId')
       const date = localStorage.getItem('date')
       this.attribute = true
-      api.get('http://localhost:8085/api/v1/users/getdate/' + docId + '/' + date + '/' + time, {})
+      api.get('http://65.109.235.33:8085/api/v1/users/getdate/' + docId + '/' + date + '/' + time, {})
 
           .then(() => {
 

@@ -72,7 +72,7 @@ export default {
   methods: {
     // getAllUser() {
     //   const token = localStorage.getItem('token')
-    //   axios.get('http://localhost:8085/api/v1/admin/users/search', {
+    //   axios.get('http://65.109.235.33:8085/api/v1/admin/users/search', {
     //     headers: {
     //       'Authorization': `Bearer_${token}`
     //     }
@@ -89,13 +89,13 @@ export default {
     },
     // getUsers() {
     //
-    //   axios.get('http://localhost:8085/api/v1/users/' + this.id, {}).then((res) => {
+    //   axios.get('http://65.109.235.33:8085/api/v1/users/' + this.id, {}).then((res) => {
     //     console.log(res.data)
     //   }).catch((error) => console.error(error))
     //
     // },
     // deleteUsers() {
-    //   api.get('http://localhost:8085/api/v1/admin/users/delete/' + this.id, {}).then((res) => {
+    //   api.get('http://65.109.235.33:8085/api/v1/admin/users/delete/' + this.id, {}).then((res) => {
     //     this.id = res.data.id
     //     console.log(res.data.id)
     //     window.location.href = 'http://localhost:3000/admin';

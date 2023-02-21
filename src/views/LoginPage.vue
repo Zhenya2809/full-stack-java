@@ -54,7 +54,7 @@ export default {
 
       }
       console.log(data)
-      axios.post('http://localhost:8085/api/v1/auth/login', data).then(response => {
+      axios.post('http://65.109.235.33:8085/api/v1/auth/login', data).then(response => {
         localStorage.setItem('phone', this.phone)
         this.token = response.data
         localStorage.setItem('token', this.token.token)

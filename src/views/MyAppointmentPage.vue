@@ -78,7 +78,7 @@ export default {
     },
 
     getAppointment() {
-      api.get('http://localhost:8085/api/v1/users/getAppointment', {}).then((res) => {
+      api.get('http://65.109.235.33:8085/api/v1/users/getAppointment', {}).then((res) => {
         this.items = res.data
         console.log(res.data)
       }).catch((error) => console.error(error))

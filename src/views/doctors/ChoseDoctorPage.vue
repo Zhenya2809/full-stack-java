@@ -90,19 +90,19 @@ export default {
     choseDoc() {
       console.log('doc speciality=', this.$route.params.speciality)
 
-      api.get('http://localhost:8085/api/v1/users/choseDoc/' + this.$route.params.speciality, {}).then((res) => {
+      api.get('http://65.109.235.33:8085/api/v1/users/choseDoc/' + this.$route.params.speciality, {}).then((res) => {
         this.findBySpeciality = res.data
         this.id = res.data.id
         console.log(res.data)
       }).catch((error) => console.error(error))
     },
     sendEmailReminder() {
-      api.get('http://localhost:8085/api/v1/admin/sendEmailReminder', {}).catch((error) => console.error(error))
+      api.get('http://65.109.235.33:8085/api/v1/admin/sendEmailReminder', {}).catch((error) => console.error(error))
 
     },
     getAllDoctor() {
 
-      api.get('http://localhost:8085/api/v1/users/doctors/search', {}).then((res) => {
+      api.get('http://65.109.235.33:8085/api/v1/users/doctors/search', {}).then((res) => {
         this.items = res.data
         console.log(res.data)
       }).catch((error) => console.error(error))
@@ -110,7 +110,7 @@ export default {
 
     getSpeciality() {
 
-      api.get('http://localhost:8085/api/v1/users/doctors/getSpeciality', {}).then((res) => {
+      api.get('http://65.109.235.33:8085/api/v1/users/doctors/getSpeciality', {}).then((res) => {
         this.specialitys = res.data
         console.log(res.data)
       }).catch((error) => console.error(error))

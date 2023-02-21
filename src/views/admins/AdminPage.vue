@@ -39,7 +39,7 @@ export default {
 
     sendEmailReminder() {
 
-      api.get('http://localhost:8085/api/v1/admin/sendEmailReminder', {}).catch((error) => console.error(error))
+      api.get('http://65.109.235.33:8085/api/v1/admin/sendEmailReminder', {}).catch((error) => console.error(error))
 
     },
     checkAuthorization() {
