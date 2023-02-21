@@ -1,33 +1,29 @@
 <template>
   <div class="calendar">
-  <n-calendar class="text_1"
-              @click="showModal = true"
-              v-model:value="value"
-              #="{ year, month, date }"
-              :is-date-disabled="isDateDisabled"
-              @update:value="handleUpdateValue"
-  >
-    {{ year }}-{{ month }}-{{ date }}
-  </n-calendar>
+    <n-calendar class="text_1"
+                @click="showModal = true"
+                v-model:value="value"
+                #="{ year, month, date }"
+                :is-date-disabled="isDateDisabled"
+                @update:value="handleUpdateValue"
+    >
+      {{ year }}-{{ month }}-{{ date }}
+    </n-calendar>
   </div>
   <div v-if="time!==''">
-
-
-      <div>
-        <div v-if="showModal" class="modal" @click.self="showModal=false">
-
-          <div class="modal-content">
-            <div>
-              <p>Виберіть вільний час для запису</p>
-            </div>
-
-            <button class="button" v-for="item in items" :key="item.time" @click="choseTime(item.time)" :disabled=attribute>
-              {{ item.time }}
-            </button>
-          </div>
+    <div v-if="showModal" class="modal" @click.self="showModal=false">
+      <div class="modal-content">
+        <div class="modal-title">
+          <p>Виберіть вільний час для запису</p>
+        </div>
+        <div class="modal-button">
+          <button class="button" v-for="item in items" :key="item.time" @click="choseTime(item.time)"
+                  :disabled=attribute>
+            {{ item.time }}
+          </button>
         </div>
       </div>
-
+    </div>
   </div>
 
 </template>
@@ -155,22 +151,6 @@ export default {
   color: #070707;
 }
 
-.button {
-  scroll-behavior: smooth;
-  border: none;
-  border-radius: 7px;
-  display: block;
-  margin-bottom: 10px;
-  background: #888888;
-  cursor: pointer;
-  font-weight: bold;
-  color: white;
-  font-size: 40px;
-
-
-  display: flex;
-  margin-bottom: 10px;
-}
 
 .n-calendar {
 
@@ -191,6 +171,20 @@ export default {
   align-content: center;
 
 }
+
+.button {
+  scroll-behavior: smooth;
+  border: none;
+  border-radius: 7px;
+  display: block;
+  margin-bottom: 10px;
+  background: #888888;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  font-size: 40px;
+}
+
 .modal {
   position: fixed;
   z-index: 1;
@@ -207,18 +201,43 @@ export default {
   padding: 20px;
   border: 1px solid #888;
   width: 30%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
   justify-items: center;
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: column;
 }
-.closeButton{
+.modal-button button {
+  width: 27%;
+  max-width: 27%;
+  margin-left: 3%;
+  margin-right: 3%;
+}
+.modal-button {
+  display: flex;
+  flex-wrap: wrap;
+  /*justify-content: space-between;*/
+}
+.modal-content div {
+  order: 1;
+  min-width: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-content .button {
+  width: calc(50%);
+  display: flex;
+  justify-content: center;
+}
+
+.closeButton {
   position: absolute;
   bottom: 600px;
   left: 50%;
   transform: translateX(-50%);
 }
-.calendar{
+
+.calendar {
   margin-left: 650px;
   margin-right: 650px;
 }
