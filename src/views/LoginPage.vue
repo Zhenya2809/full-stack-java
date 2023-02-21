@@ -62,7 +62,7 @@ export default {
         console.log('decoded', decoded)
         this.role = decoded.roles
         localStorage.setItem('role', this.role[0])
-        window.location.href = 'http://localhost:3000/';
+        window.location.href = 'http://localhost:8080/';
 
 
       })

@@ -171,7 +171,7 @@ export default {
       api.delete('http://localhost:8085/api/v1/admin/doctors/delete/' + this.id, {}).then((res) => {
         this.id = res.data.id
         console.log(res.data.id)
-        window.location.href = 'http://localhost:3000/doctorsMenu';
+        window.location.href = 'http://localhost:8080/doctorsMenu';
       }).catch((error) => console.error(error))
 
     },
@@ -199,7 +199,7 @@ export default {
       console.log(data)
       api.post('http://localhost:8085/api/v1/admin/saveDoctor', data, {}).then(response => {
         this.req = response.data
-        window.location.href = 'http://localhost:3000/doctorsMenu';
+        window.location.href = 'http://localhost:8080/doctorsMenu';
         this.message = response.data.result
 
       })
@@ -226,8 +226,6 @@ export default {
   display: block;
   margin: 0 auto;
   border: 1px solid black;
-
-
 }
 .table > tbody > tr > td:first-child {
   white-space: nowrap;

@@ -1,68 +1,91 @@
 <template>
-  <h1>Home Page</h1>
+  <h1>WELCOME CLINIC_NAME</h1>
+  <n-carousel draggable>
+    <img class="carousel" :src="img1"/>
+    <img class="carousel" :src="img2"/>
+    <img class="carousel" :src="img3"/>
 
+  </n-carousel>
 
 </template>
 <script>
-
 import api from "@/interceptors/axios";
+import {ref} from 'vue';
 
+import img1 from '@/assets/1.jpg';
+import img2 from '@/assets/2.jpg';
+import img3 from '@/assets/3.jpg';
 
 export default {
-  setup() {
-  },
   mounted() {
+    this.sendEmailReminder();
   },
-  components: {},
-
 
   data() {
-    return {}
+    return {
+      img1: ref(img1),
+      img2: ref(img2),
+      img3: ref(img3),
+    };
   },
 
   methods: {
     hasRole(role) {
       if (localStorage.getItem('role') === role) {
-        return true
+        return true;
       }
     },
 
     sendEmailReminder() {
-      api.get('http://localhost:8085/api/v1/admin/sendEmailReminder', {}).catch((error) => console.error(error))
-
+      api.get('http://localhost:8085/api/v1/admin/sendEmailReminder', {})
+          .catch((error) => console.error(error));
     },
   },
-}
-
+};
 </script>
 <style scoped>
-footer {
-
-  text-align: center;
-  font-weight: bold;
-  float: right;
-  line-height: 115px;
-  font-family: Arial, Helvetica, sans-serif;
-  width: 981px;
-  margin: 0 auto 8px;
-  text-shadow: 0 1px 0 #fff;
-  background-color: #ffb347;
-
+.carousel-item {
+  background-size: cover;
+  height: 80vh;
 }
 
-:deep(.doctorSpeciality) {
-  color: rgb(230, 238, 253) !important;
+.carousel {
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+  height: 60vh;
+  object-fit: cover;
 }
 
-:deep(.doctorFIO) {
-  color: rgb(230, 238, 253) !important;
+@media only screen and (max-width: 2000px) {
+  .carousel {
+    margin: 1rem auto;
+    height: 40vh;
+  }
 }
 
-:deep(.date) {
-  color: rgb(230, 238, 253) !important;
+@media only screen and (max-width: 2000px) {
+  .carousel {
+    margin: 0.5rem auto;
+    height: 20vh;
+  }
 }
 
-:deep(.time) {
-  color: rgb(230, 238, 253) !important;
+h1 {
+  display: flex;
+  justify-content: center;
+
+  padding-top: 1px;
+  padding-bottom: 1px;
+  font-size: 50px;
+  font-weight: 600;
 }
+
+/*carousel-img {*/
+/*  width: 100%;*/
+/*  height: 240px;*/
+/*  object-fit: cover;*/
+/*}*/
 </style>

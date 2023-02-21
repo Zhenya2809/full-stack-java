@@ -14,7 +14,7 @@ api.interceptors.response.use(response => {
                 router.replace({
                     path: '/login'
                     // Перейти на текущую страницу после успешного входа
-                    // query: {redirect: router.currentRoute.fullPath}
+                    // query: {redirect: router.currentRoute.fullPath}``
                 })
         }
         // Возвращаем сообщение об ошибке, возвращаемое интерфейсом
