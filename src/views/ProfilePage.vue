@@ -10,8 +10,8 @@
                   :bordered="false"
     />
 
-    <n-form-item class="form-control" path="id">
-      <n-input class="even-row-color" v-model:value="id" placeholder="id"/>
+    <n-form-item class="form" path="id">
+      <n-input class="form-group" v-model:value="id" placeholder="id"/>
     </n-form-item>
     <div class="button">
       <n-button type="error" @click="deletePatientCard" >
@@ -231,22 +231,20 @@ export default {
 }
 
 .form-2 {
-  background: #e70707 url('https://i.ibb.co/PZB0b1X/223223.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-
-}
-
-.even-row-color {
-  width: 30%;
-  height: 30px;
-  display: block;
-  margin: 0 auto;
-  border: 1px solid black;
-  --n-color-focus: red;
 
 
 }
+
+/*.even-row-color {*/
+/*  width: 30%;*/
+/*  height: 30px;*/
+/*  display: block;*/
+/*  margin: 0 auto;*/
+/*  border: 1px solid black;*/
+/*  --n-color-focus: red;*/
+
+
+/*}*/
 
 .background {
   display: block;

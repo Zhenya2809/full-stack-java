@@ -31,7 +31,7 @@ footer{
   position: relative;
   text-align: center;
   color: var(--text);
-  text-shadow: 0 0 15px #f80202;
+  text-shadow: 0 0 15px #888888;
 
 }
 </style>

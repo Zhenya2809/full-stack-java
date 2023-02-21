@@ -1,5 +1,7 @@
 <template>
+  <div class="calendar">
   <n-calendar class="text_1"
+              @click="showModal = true"
               v-model:value="value"
               #="{ year, month, date }"
               :is-date-disabled="isDateDisabled"
@@ -7,31 +9,40 @@
   >
     {{ year }}-{{ month }}-{{ date }}
   </n-calendar>
-
+  </div>
   <div v-if="time!==''">
-    <div class="text">
-      <n-gradient-text gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)" v-if="time!==''" size="77">
-        Виберіть вільний час для запису
-      </n-gradient-text>
-    </div>
-    <div class="cards" id="id2">
-      <button class="button" v-for="item in items" :key="item.time" @click="choseTime(item.time)" :disabled=attribute>
-        {{ item.time }}
-      </button>
-    </div>
+
+
+      <div>
+        <div v-if="showModal" class="modal" @click.self="showModal=false">
+
+          <div class="modal-content">
+            <div>
+              <p>Виберіть вільний час для запису</p>
+            </div>
+
+            <button class="button" v-for="item in items" :key="item.time" @click="choseTime(item.time)" :disabled=attribute>
+              {{ item.time }}
+            </button>
+          </div>
+        </div>
+      </div>
+
   </div>
 
 </template>
 
 
 <script>
-import {isYesterday, addDays} from "date-fns/esm";
+import {addDays} from "date-fns/esm";
 import {ref} from "vue";
 import api from "@/interceptors/axios";
 
 export default {
   setup() {
+    const showModal = ref(false);
     return {
+      showModal,
       pagination: false
     };
 
@@ -57,12 +68,12 @@ export default {
       value: ref(addDays(Date.now(), 0).valueOf()),
 
       isDateDisabled(timestamp) {
-        if (isYesterday(timestamp)) {
-          return true;
-        }
+        const selectedDate = new Date(timestamp);
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        return selectedDate < today;
 
-        return false;
-      },
+      }
 
     }
   },
@@ -129,42 +140,36 @@ export default {
     }
   },
 
+
 }
 </script>
 <style scoped>
 
-/*.text_1 {*/
-/*  background: #2f2f60 url('https://p0.pikist.com/photos/554/795/oak-grain-wood-trim-structure-pattern-texture-background-table.jpg') ;*/
-/*  margin-top: 10px;*/
-/*  color: red;*/
-/*}*/
-/*span {*/
-/*  color: black;*/
-/*}*/
+
 .text {
   display: flex;
-
-
   justify-content: center;
 }
 
-.n-calendar text_1 {
-  --n-title-text-color: rgb(35 108 181);
-  color: red;
-
+.text_1 {
+  color: #070707;
 }
 
 .button {
   scroll-behavior: smooth;
   border: none;
   border-radius: 7px;
-
-  background: #ff9900;
+  display: block;
+  margin-bottom: 10px;
+  background: #888888;
   cursor: pointer;
-  text-transform: uppercase;
   font-weight: bold;
   color: white;
-  font-size: 77px;
+  font-size: 40px;
+
+
+  display: flex;
+  margin-bottom: 10px;
 }
 
 .n-calendar {
@@ -185,6 +190,37 @@ export default {
   flex-direction: row;
   align-content: center;
 
+}
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  justify-items: center;
+}
+.closeButton{
+  position: absolute;
+  bottom: 600px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.calendar{
+  margin-left: 650px;
+  margin-right: 650px;
 }
 
 </style>

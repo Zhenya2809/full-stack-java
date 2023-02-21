@@ -4,18 +4,18 @@
             :size="50"
             :src="img1"
         />
-        <router-link v-if="hasRole('ROLE_USER')" to="/" exact>ГОЛОВНА</router-link>
-        <router-link v-if="hasRole('ROLE_USER')" to="/myAppointment" exact>ЗАПИСИ</router-link>
-        <router-link v-if="hasRole('ROLE_USER')" to="/choseDoctor">ЛІКАРІ</router-link>
-        <router-link v-if="hasRole('ROLE_USER')" to="/about">ПРО НАС</router-link>
-        <router-link v-if="hasRole('ROLE_USER')" to="/profile">МІЙ ПРОФІЛЬ</router-link>
-        <router-link v-if="hasRole('ROLE_ADMIN')" to="/profile">ПРОФІЛІ</router-link>
-        <router-link v-if="hasRole('ROLE_ADMIN')" to="/usersMenu">КОРИСТУВАЧІ</router-link>
-        <router-link v-if="hasRole('ROLE_ADMIN')" to="/doctorsMenu">ЛІКАРІ</router-link>
-        <router-link v-if="hasRole('ROLE_ADMIN')" to="/admin">АДМІНІСТРАТОРИ</router-link>
+        <router-link v-if="hasRole('ROLE_USER')" to="/" exact>Головна</router-link>
+        <router-link v-if="hasRole('ROLE_USER')" to="/myAppointment" exact>Записи</router-link>
+        <router-link v-if="hasRole('ROLE_USER')" to="/choseDoctor">Лікарі</router-link>
+        <router-link v-if="hasRole('ROLE_USER')" to="/about">Про нас</router-link>
+        <router-link v-if="hasRole('ROLE_USER')" to="/profile">Мій профіль</router-link>
+        <router-link v-if="hasRole('ROLE_ADMIN')" to="/profile">Профілі</router-link>
+        <router-link v-if="hasRole('ROLE_ADMIN')" to="/usersMenu">Користувачі</router-link>
+        <router-link v-if="hasRole('ROLE_ADMIN')" to="/doctorsMenu">Лікарі</router-link>
+        <router-link v-if="hasRole('ROLE_ADMIN')" to="/admin">Адміністратори</router-link>
         <router-link v-if="hideContent" to="/login" class="login">Вхід</router-link>
         <router-link v-if="hasRole('ROLE_DOCTOR')" to="/appointments" exact>Appointments</router-link>
-        <router-link to="/login" @click="logOut" class="logout">Вихід</router-link>
+        <router-link v-if="hasRole('ROLE_ADMIN')||hasRole('ROLE_USER')||hasRole('ROLE_DOCTOR')" to="/login" @click="logOut" class="logout">Вихід</router-link>
       </nav>
       <router-view></router-view>
       <FooterPage/>
@@ -27,7 +27,7 @@
 // import HeaderPage from "@/views/HeaderPage";
 import FooterPage from "@/views/FooterPage";
 // import {darkTheme} from 'naive-ui';
-import img1 from '@/assets/logo.jpg';
+import img1 from '@/assets/logo1.jpg';
 import {ref} from "vue";
 export default {
 
@@ -141,21 +141,25 @@ nav {
   font-size: 0;
   align-content: center;
 }
-
+h1{
+  display: flex;
+  justify-content: center;
+}
 
 nav a {
   line-height: 50px;
   height: 100%;
-  font-size: 15px;
+  font-size: 25px;
   display: inline-block;
   position: relative;
   z-index: 10;
   text-decoration: none;
   /*text-transform: uppercase;*/
   text-align: center;
-  color: #b3c598;
-  text-shadow: 0 0 15px #9d822b;
+  color: #605f5f;
+  text-shadow: 0 0 15px #888888;
   cursor: pointer;
+  font-weight: 600;
 
 
 }

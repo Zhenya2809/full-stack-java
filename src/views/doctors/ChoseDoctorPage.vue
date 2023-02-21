@@ -24,7 +24,6 @@
 <!--            </div>-->
 
           </n-card>
-
         </router-link>
 
       </div>
@@ -128,9 +127,8 @@ export default {
 </script>
 <style scoped>
 .navigation{
-  background: #e70707 url('https://i.ibb.co/PZB0b1X/223223.png');
-  background-repeat: no-repeat;
-  background-size: cover;
+  display: flex;
+  justify-content: center;
 }
 .table {
 
@@ -158,12 +156,12 @@ export default {
 
 /*}*/
 .n-card {
-  background: #001e34;
-
+  background: whitesmoke;
+  border-radius: 30px;
 }
 
 .doctor-img:hover {
-  filter: grayscale(0);
+  /*filter: grayscale(0);*/
   transform: scale(1.1);
 }
 
@@ -186,6 +184,7 @@ export default {
   justify-content: center;
   word-break: break-all;
 
+
 }
 
 
@@ -198,10 +197,8 @@ nav a {
   display: inline-block;
   position: relative;
   z-index: 10;
-  text-decoration: none;
-  /*text-transform: uppercase;*/
   text-align: center;
-  color: #ea5a5a;
+  color: #3d3d3d;
   cursor: pointer;
 
 
@@ -237,56 +234,14 @@ a:nth-child(6) {
   width: 100px;
 
 }
-
-.text {
-  font-size: calc(var(--index) / 1.175);
-  letter-spacing: calc(var(--index) / 19.5);
-  margin-top: calc(var(--index) * -.75);
-  transition: var(--transition);
-  will-change: transform;
-  text-transform: uppercase;
-  font-weight: 600;
-  vertical-align: 0;
+h2{
+  display: flex;
   justify-content: center;
-  align-items: center;
-  position: relative;
-  text-align: center;
-  color: var(--text);
-  text-shadow: 0 0 15px rgb(255, 7, 7);
-  background: #001e34;
-
+  text-decoration: none;
+}
+a{
+  text-decoration: none;
 }
 
-/*.n-data-table-td {*/
-/*  background-color: black;*/
-/*  background: red;*/
-/*    width: 100%;*/
-/*    font-size: var(--n-font-size);*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    position: relative;*/
-/*  !*!/шапка*!*!*!*!*!*/
-/*    --n-merged-th-color: red;*/
-/*  !*!/наполнение*!*!*!*!*!*/
-/*    --n-merged-td-color: green;*/
-/*    --n-merged-border-color: blue;*/
-/*    --n-merged-th-color-hover: yellow;*/
-/*    --n-merged-td-color-hover: black;*/
-/*    --n-merged-td-color-striped: gray;*/
-/*}*/
-.h2{
-  color: #2a8ac4;
-  --text-color: rgb(0 127 255);
-}
-nav[data-v-410adcc0] {
-  margin: 27px auto 0;
-  position: relative;
-  width: 890px;
-  height: 50px;
-  background-color: #001e34;
-  border-radius: 8px;
-  font-size: 0;
-  align-content: center;
-}
 
 </style>

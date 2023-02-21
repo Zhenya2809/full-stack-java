@@ -6,6 +6,7 @@
                   :data="items"
                   :pagination="pagination"
                   :bordered="false"
+                  :striped="true"
     />
   </div>
 </template>
@@ -93,5 +94,12 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 70%;
+  background-color: #605f5f;
+}
+.table{
+  border-collapse: collapse;
+  width: 100%;
+
+
 }
 </style>

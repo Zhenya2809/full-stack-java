@@ -1,4 +1,5 @@
 <template>
+
   <h1>WELCOME CLINIC_NAME</h1>
   <n-carousel draggable>
     <img class="carousel" :src="img1"/>
@@ -44,10 +45,6 @@ export default {
 };
 </script>
 <style scoped>
-.carousel-item {
-  background-size: cover;
-  height: 80vh;
-}
 
 .carousel {
   margin: 2rem auto;
@@ -57,20 +54,6 @@ export default {
   width: 100%;
   height: 60vh;
   object-fit: cover;
-}
-
-@media only screen and (max-width: 2000px) {
-  .carousel {
-    margin: 1rem auto;
-    height: 40vh;
-  }
-}
-
-@media only screen and (max-width: 2000px) {
-  .carousel {
-    margin: 0.5rem auto;
-    height: 20vh;
-  }
 }
 
 h1 {
@@ -83,9 +66,4 @@ h1 {
   font-weight: 600;
 }
 
-/*carousel-img {*/
-/*  width: 100%;*/
-/*  height: 240px;*/
-/*  object-fit: cover;*/
-/*}*/
 </style>
