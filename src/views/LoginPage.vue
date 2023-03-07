@@ -1,37 +1,40 @@
 <template>
-  <form class="form-2" @submit.prevent="onSubmit">
-    <h1><span class="log-in">Войти</span> или <span class="sign-up">зарегистрироваться</span></h1>
-    <p class="float">
+  <form @submit.prevent="onSubmit" class="login-form">
+    <label for="phone" class="form-label">Телефон</label>
+    <UInput
+            id="phone"
+            class="UInput"
+            v-model="phone"
+            placeholder="Phone number"></UInput>
 
-      <n-input v-model:value="phone" type="text" placeholder="phone" name="phone" size="large" round/>
-    </p>
-    <p class="float">
-
-      <n-input v-model:value="password"
-               round
-               placeholder="Password"
-               type="password"
-               show-password-on="mousedown"
-               :minlength="8"
-               :maxlength="16"/>
-    </p>
+    <label for="password" class="form-label">Пароль</label>
+    <UInput type="password"
+            id="password"
+            class="UInput"
+            v-model="password"
+            placeholder="password"
+            title="Пароль должен содержать как минимум одну заглавную букву, одну строчную букву, одну цифру и иметь длину не менее 8 символов.">
+      >
+    </UInput>
     <p class="clearfix">
-      <a href="/registration" class="registration">Зарегистрироваться</a>
-      <input type="submit" name="submit" value="Войти">
-    </p>
-  </form>
+      <a href="/registration" class="registration">Зареєструватись</a>
 
+    </p>
+    <button type="submit" class="form-button">Войти</button>
+  </form>
 </template>
 
 <script>
 import axios from "axios";
-import {NInput} from 'naive-ui'
+
 import jwt_decode from "jwt-decode";
+import UInput from "@/components/global/UInput.vue";
 
 
 export default {
   components: {
-    NInput
+    UInput
+
   },
   name: "LoginHyi",
 
@@ -54,7 +57,7 @@ export default {
 
       }
       console.log(data)
-      axios.post('http://65.109.235.33:8085/api/v1/auth/login', data).then(response => {
+      axios.post('http://65.109.235.33/api/v1/auth/login', data).then(response => {
         localStorage.setItem('phone', this.phone)
         this.token = response.data
         localStorage.setItem('token', this.token.token)
@@ -73,28 +76,44 @@ export default {
 </script>
 
 <style>
-.n-input .n-input__input-el {
-  color: black;
+.login-form {
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 23px;
 }
 
-.n-base-icon {
-  color: red;
+.form-label {
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 0.5rem;
 }
 
-.n-input {
-  --n-color-focus: black;
-  color: black;
-  text-decoration-color: black;
-  -webkit-tap-highlight-color: transparent;
-  padding: 0px;
-  margin: 0px;
+.form-button {
+  width: 70%;
+  font-size: 1.2rem;
+  padding: 0.75rem;
+  color: #fff;
+  background-color: #08ff00;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
 
+.form-button:hover,
+.form-button:focus {
+  background-color: #0ecc00;
+}
 
-  background-color: rgb(230, 238, 253);
-
-  font-size: 14px;
-  font-family: v-sans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  line-height: 1.6;
-  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s, background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+.UInput {
+  /* остальные стили... */
+  width: 70%
 }
 </style>

@@ -98,14 +98,12 @@ export default {
       const docId = localStorage.getItem('docId')
       localStorage.setItem('date', pickDate)
       localStorage.setItem('docId', this.$route.params.id)
-      api.get('http://65.109.235.33:8085/api/v1/users/appointment/' + pickDate + '/' + docId, {})
+      api.get('http://65.109.235.33/api/v1/users/appointment/' + pickDate + '/' + docId, {})
           .then((res) => {
 
             console.log(res.data)
             this.items = res.data
             this.time = res.data.time
-            // scrollBy(0, 823)
-            // window.location.href = '#id2';
           }).catch((error) => console.error(error))
     },
 
@@ -121,7 +119,7 @@ export default {
       const docId = localStorage.getItem('docId')
       const date = localStorage.getItem('date')
       this.attribute = true
-      api.get('http://65.109.235.33:8085/api/v1/users/getdate/' + docId + '/' + date + '/' + time, {})
+      api.get('http://65.109.235.33/api/v1/users/getdate/' + docId + '/' + date + '/' + time, {})
 
           .then(() => {
 
@@ -129,7 +127,7 @@ export default {
             localStorage.removeItem('docId')
             localStorage.removeItem('date')
             localStorage.removeItem('time')
-            this.$router.push({path: '/'})
+            this.$router.push({path: '/myAppointment'})
 
 
           })
@@ -152,25 +150,7 @@ export default {
 }
 
 
-.n-calendar {
 
-  /*flex-direction: row;*/
-  /*align-content: center;*/
-  /*width:80%;*/
-
-}
-
-.cards {
-  display: flex;
-  flex-flow: row wrap;
-  gap: 8px 12px;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-content: center;
-
-}
 
 .button {
   scroll-behavior: smooth;
@@ -188,11 +168,9 @@ export default {
 .modal {
   position: fixed;
   z-index: 1;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.39);
 }
 
 .modal-content {
@@ -230,16 +208,12 @@ export default {
   justify-content: center;
 }
 
-.closeButton {
-  position: absolute;
-  bottom: 600px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .calendar {
-  margin-left: 650px;
-  margin-right: 650px;
+  margin-left: 100px;
+  margin-right: 100px;
+  flex-direction: row;
+  align-content: center;
+  width:80%;
 }
 
 </style>

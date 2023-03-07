@@ -1,11 +1,11 @@
 <template>
-  <h1>Відправити нагадування клієнтам на почту</h1>
-  <div v-if="hasRole('ROLE_ADMIN')">
-    <div class="button">
 
-      <n-button type="success" @click="sendEmailReminder()">
+  <div v-if="hasRole('ROLE_ADMIN')">
+    <div class="middle">
+      <h3>Відправити нагадування клієнтам на почту</h3>
+      <UButton type="success" @click="sendEmailReminder()">
         Send --->Email
-      </n-button>
+      </UButton>
     </div>
 
   </div>
@@ -13,20 +13,19 @@
 </template>
 <script>
 
-import {NButton} from "naive-ui";
 import api from "@/interceptors/axios";
+import UButton from "@/components/global/UButton.vue";
 
 export default {
   mounted() {
     this.checkAuthorization()
   },
-  components: {NButton},
+  components: {UButton},
   name: "LoginHyi",
 
   data() {
     return {
       hideContent: false,
-
     }
   },
 
@@ -39,7 +38,7 @@ export default {
 
     sendEmailReminder() {
 
-      api.get('http://65.109.235.33:8085/api/v1/admin/sendEmailReminder', {}).catch((error) => console.error(error))
+      api.get('http://65.109.235.33/api/v1/admin/sendEmailReminder', {}).catch((error) => console.error(error))
 
     },
     checkAuthorization() {

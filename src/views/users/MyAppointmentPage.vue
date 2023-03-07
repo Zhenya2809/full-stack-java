@@ -1,5 +1,5 @@
 <template>
-  <h1>Appointment Page</h1>
+  <h1>Мої записи до лікаря</h1>
   <div v-if="hasRole('ROLE_USER')" class="background">
     <n-data-table class="table"
                   :columns="columns"
@@ -18,27 +18,27 @@ import api from "@/interceptors/axios";
 const createColumns = () => {
   return [
     {
-      title: "Speciality",
+      title: "Спеціальність",
       key: "doctorSpeciality",
       className: 'doctorSpeciality'
     },
     {
-      title: "FirstName",
+      title: "Ім'я",
       key: "doctorFirstName",
       className: 'doctorFirstName'
     },
     {
-      title: "LastName",
+      title: "Призвіще",
       key: "doctorLastName",
       minWidth: '100px'
     },
     {
-      title: "Date",
+      title: "Дата",
       key: "date",
       className: 'date'
     },
     {
-      title: "Time",
+      title: "Час",
       key: "time",
       className: 'time',
 
@@ -64,9 +64,9 @@ export default {
       items: [{
         date: null,
         time: null,
-        doctorSpeciality: null,
-        doctorFirstName: null,
-        doctorLastName: null,
+        speciality: null,
+        firstName: null,
+        lastName: null,
       }],
     }
   },
@@ -78,7 +78,7 @@ export default {
     },
 
     getAppointment() {
-      api.get('http://65.109.235.33:8085/api/v1/users/getAppointment', {}).then((res) => {
+      api.get('http://65.109.235.33/api/v1/users/getAppointment', {}).then((res) => {
         this.items = res.data
         console.log(res.data)
       }).catch((error) => console.error(error))
@@ -96,10 +96,18 @@ export default {
   width: 70%;
   background-color: #605f5f;
 }
+
 .table{
   border-collapse: collapse;
   width: 100%;
+  /*font-weight: bold;*/
+  font-weight: bolder;
+  font-size: .875rem;
+  border-radius: .2rem;
+  box-sizing: border-box;
 
+  margin: 0 auto;
+  border: 1px solid black;
 
 }
 </style>

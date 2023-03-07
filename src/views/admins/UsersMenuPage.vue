@@ -1,29 +1,32 @@
 <template>
   <h1>Меню користувачів </h1>
   <div v-if="hasRole('ROLE_ADMIN')">
+    <div class="middle1">
+      <UInput class="form-group" v-model="searchFio" placeholder="Пошук" @input="onSearch()"  />
+    </div>
     <n-data-table class="table"
                   :columns="columns"
                   :data="items"
                   :pagination="pagination"
                   :bordered="false"
     />
+    <div class="middle">
+      <h1>Введіть id користувача для видалення </h1>
+      <UInput class="even-row-color" v-model="id" placeholder="id"/>
 
-    <h1>Введіть id користувача для видалення </h1>
-    <n-form-item class="form-control" path="id">
-      <n-input class="even-row-color" v-model:value="id" placeholder="id"/>
-    </n-form-item>
-    <div class="button">
-      <n-button type="error" @click="deleteUsers">
+
+      <UButton type="error" @click="deleteUsers">
         DELETE
-      </n-button>
+      </UButton>
     </div>
   </div>
 </template>
 
 <script>
 
-import axios from "axios";
-import {NButton, NInput} from "naive-ui";
+import UInput from "@/components/global/UInput.vue";
+import UButton from "@/components/global/UButton.vue";
+import api from "@/interceptors/axios";
 
 const createColumns = () => {
   return [
@@ -33,7 +36,7 @@ const createColumns = () => {
     },
     {
       title: "Логін",
-      key: "username"
+      key: "phone"
     },
     {
       title: "Ім'я",
@@ -62,7 +65,7 @@ export default {
     this.checkAuthorization()
     this.getAllUser()
   },
-  components: {NButton, NInput},
+  components: {UButton, UInput},
 
   name: "AboutPages",
 
@@ -71,10 +74,10 @@ export default {
       token: null,
       hideContent: true,
       id: null,
-
+      searchFio: null,
       items: [{
         id: '',
-        username: '',
+        phone: '',
         email: '',
         firstName: '',
         lastName: ''
@@ -85,12 +88,7 @@ export default {
 
   methods: {
     getAllUser() {
-      const token = localStorage.getItem('token')
-      axios.get('http://65.109.235.33:8085/api/v1/admin/users/search', {
-        headers: {
-          'Authorization': `Bearer_${token}`
-        }
-      }).then((res) => {
+      api.get('http://65.109.235.33/api/v1/admin/users/search', {}).then((res) => {
         this.items = res.data
         console.log(res.data)
       }).catch((error) => console.error(error))
@@ -101,28 +99,19 @@ export default {
         return true;
       }
     },
-    getUsers() {
-      const token = localStorage.getItem('token')
-      axios.get('http://65.109.235.33:8085/api/v1/users/' + this.id, {
-        headers: {
-          'Authorization': `Bearer_${token}`
-        }
-      }).then((res) => {
-
+    onSearch() {
+      console.log(this.searchFio)
+      api.get('http://65.109.235.33/api/v1/admin/searchUser/' + this.searchFio, {}).then((res) => {
+        this.items = res.data
         console.log(res.data)
       }).catch((error) => console.error(error))
-
     },
     deleteUsers() {
-      const token = localStorage.getItem('token')
-      axios.get('http://65.109.235.33:8085/api/v1/admin/users/delete/' + this.id, {
-        headers: {
-          'Authorization': `Bearer_${token}`
-        }
+      api.get('http://65.109.235.33/api/v1/admin/users/delete/' + this.id, {
       }).then((res) => {
         this.id = res.data.id
         console.log(res.data.id)
-        window.location.href = 'http://localhost:3000/admin';
+        window.location.href = 'http://localhost:8080/usersMenu';
       }).catch((error) => console.error(error))
 
     },
@@ -137,18 +126,18 @@ export default {
 </script>
 <style scoped>
 
-.even-row-color {
-  width: 30%;
-  height: 30px;
-  display: block;
+
+
+.table {
+
+  padding: .25rem .5rem;
+  font-size: .875rem;
+  border-radius: .2rem;
+  box-sizing: border-box;
+  width: 90%;
+  font-weight: bold;
   margin: 0 auto;
   border: 1px solid black;
-
-
-}
-.button {
-  display: flex;
-  justify-content: center;
 }
 
 

@@ -1,5 +1,5 @@
 <template>
-  <h1>Chose Dr.</h1>
+  <h1>Виберіть лікаря</h1>
 
   <div v-if="hasRole('ROLE_USER')">
     <nav class="navigation">
@@ -14,16 +14,13 @@
 
       <div v-for="item in findBySpeciality" :key="item.id">
         <router-link :to="'/calendarAppointment/'+item.id" @click="saveDocId(item.id)"><p>{{ item.docSpeciality }}</p>
+          <UCard :post-link="'/calendarAppointment/'+item.id"
+                 :image="item.photo"
+                 :title="item.firstName + ' ' +item.lastName"
+                 :text="item.about"
+          >
 
-          <n-card>
-            <h2> {{ item.doctorFirstName }} {{ item.doctorLastName }}</h2>
-            <img class="doctor-img" v-bind:src="item.linkPhoto" alt="doctors photo">
-
-<!--            <div class="text">-->
-<!--              {{ item.about }}-->
-<!--            </div>-->
-
-          </n-card>
+          </UCard>
         </router-link>
 
       </div>
@@ -33,6 +30,7 @@
 <script>
 
 import api from "@/interceptors/axios";
+import UCard from "@/components/global/UCard.vue";
 
 export default {
   setup() {
@@ -47,7 +45,7 @@ export default {
 
     this.checkAuthorization()
   },
-  components: {},
+  components: {UCard},
   name: "ChoseDoctorPage",
 
   data() {
@@ -65,11 +63,11 @@ export default {
       }],
       findBySpeciality: [{
         id: '',
-        doctorFirstName: '',
-        doctorLastName: '',
+        firstName: '',
+        lastName: '',
         speciality: '',
         about: '',
-        linkPhoto: '',
+        photo: '',
       }],
 
 
@@ -90,19 +88,19 @@ export default {
     choseDoc() {
       console.log('doc speciality=', this.$route.params.speciality)
 
-      api.get('http://65.109.235.33:8085/api/v1/users/choseDoc/' + this.$route.params.speciality, {}).then((res) => {
+      api.get('http://65.109.235.33/api/v1/users/choseDoc/' + this.$route.params.speciality, {}).then((res) => {
         this.findBySpeciality = res.data
         this.id = res.data.id
         console.log(res.data)
       }).catch((error) => console.error(error))
     },
     sendEmailReminder() {
-      api.get('http://65.109.235.33:8085/api/v1/admin/sendEmailReminder', {}).catch((error) => console.error(error))
+      api.get('http://65.109.235.33/api/v1/admin/sendEmailReminder', {}).catch((error) => console.error(error))
 
     },
     getAllDoctor() {
 
-      api.get('http://65.109.235.33:8085/api/v1/users/doctors/search', {}).then((res) => {
+      api.get('http://65.109.235.33/api/v1/users/doctors/search', {}).then((res) => {
         this.items = res.data
         console.log(res.data)
       }).catch((error) => console.error(error))
@@ -110,7 +108,7 @@ export default {
 
     getSpeciality() {
 
-      api.get('http://65.109.235.33:8085/api/v1/users/doctors/getSpeciality', {}).then((res) => {
+      api.get('http://65.109.235.33/api/v1/users/doctors/getSpeciality', {}).then((res) => {
         this.specialitys = res.data
         console.log(res.data)
       }).catch((error) => console.error(error))
@@ -126,10 +124,11 @@ export default {
 }
 </script>
 <style scoped>
-.navigation{
+.navigation {
   display: flex;
   justify-content: center;
 }
+
 .table {
 
   padding: .25rem .5rem;
@@ -141,20 +140,7 @@ export default {
   margin: 0 auto;
   border: 1px solid black;
 }
-/*.doctor-img {*/
-/*  width: 95%;*/
-/*  cursor: pointer;*/
-/*  transition: transform .3s ease-in-out;*/
-/*  filter: grayscale(.5);*/
-/*  border: 1px;*/
-/*  display: flex;*/
-/*  flex-wrap: wrap;*/
-/*  height: 50%;*/
-/*  align-items: stretch;*/
-/*  margin: 0 auto;*/
-/*  justify-content: center;*/
 
-/*}*/
 .n-card {
   background: whitesmoke;
   border-radius: 30px;
@@ -186,8 +172,6 @@ export default {
 
 
 }
-
-
 
 
 nav a {
@@ -230,16 +214,19 @@ a:nth-child(5) {
   width: 110px;
 
 }
+
 a:nth-child(6) {
   width: 100px;
 
 }
-h2{
+
+h2 {
   display: flex;
   justify-content: center;
   text-decoration: none;
 }
-a{
+
+a {
   text-decoration: none;
 }
 

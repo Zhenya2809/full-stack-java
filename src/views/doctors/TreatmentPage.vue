@@ -9,49 +9,51 @@
     />
   </div>
 
-  <div>
+
     <UModal :show="showModal"
             @update:show="showModal = $event"
             @click.self="showModal=false">
-      <h1>Редагування запису для пацієнтів</h1>
-      <p>Перевірте чи обраний вами час вільний.</p>
+      <h1>Картка пацієнта</h1>
 
+      <div class="middle">
       <UForm
           @submit.prevent="save(this.id,this.clientID,this.doctorID)"
-          form-title="Ви можете змінити час та дату запис пацієнта"
+          form-title="Заповніть картку пацієнта"
           formSubmitText="Прийняти зміни "
       >
-        <p>
+        <h4> Діагноз
           <UInput
-              v-model="date"
-              modelValue="YYYY-MM-DD"
-              type="date"
+              v-model="diagnosis"
+              modelValue="diagnosis"
+              type="textarea"
           />
-        </p>
-        <p>
+        </h4>
+        <h4> Рекомендації
           <UInput
-              modelValue="HH:MM:SS"
-              v-model="time"
-              type="time"
+              v-model="recommendations"
+              modelValue="recommendations"
+              type="textarea"
           />
-        </p>
+        </h4>
+        <h4> Симптоми
+          <UInput
+              v-model="symptoms"
+              modelValue="symptoms"
+              type="textarea"
+          />
+        </h4>
+        <h4> Лікування
+          <UInput
+              v-model="treatment"
+              modelValue="treatment"
+              type="textarea"
+          />
+        </h4>
 
       </UForm>
+      </div>
+    </UModal>
 
-    </UModal>
-  </div>
-  <div>
-    <UModal :show="showModalDelete"
-            @update:show="showModalDelete = $event"
-            @click.self="showModalDelete=false">
-      <UForm
-          @submit.prevent="deleted(this.id)"
-          form-title="Ви впевнені що хочете видалити цей запис?"
-          formSubmitText="Видалити"
-      >
-      </UForm>
-    </UModal>
-  </div>
 
 </template>
 
@@ -65,14 +67,9 @@ import UInput from "@/components/global/UInput.vue";
 
 const createColumns = ({
                          onSubmit,
-                         onSubmitDelete
                        }) => {
   return [
-    {
-      title: "ID",
-      key: "doctorAppointmentsID",
-      className: 'doctorAppointmentsID'
-    },
+
     {
       title: "Дата",
       key: "date",
@@ -83,21 +80,13 @@ const createColumns = ({
       key: "time",
       className: 'time',
     },
-    {
-      title: "ID пацієнта",
-      key: "clientID",
-      className: 'clientID',
-    },
+
     {
       title: "ФІО пацієнта",
       key: "patientFIO",
       className: 'patientFIO',
     },
-    {
-      title: "ID лікаря",
-      key: "doctorID",
-      className: 'doctorID',
-    },
+
     {
       title: "Edit",
       key: "edit",
@@ -114,22 +103,6 @@ const createColumns = ({
         );
       }
     },
-    {
-      title: "Delete",
-      key: "edit",
-      render(row) {
-        return h(
-            NButton,
-            {
-              size: "small",
-              onClick: () => {
-                onSubmitDelete(row)
-              }
-            },
-            {default: () => "Delete"}
-        );
-      }
-    }
   ];
 };
 
@@ -143,20 +116,23 @@ export default {
   },
   setup() {
     let showModal = ref(false);
-    let showModalDelete = ref(false);
-    let date = ref("")
-    let time = ref("")
     let id = ref("")
     let doctorID = ref("")
     let clientID = ref("")
+    let diagnosis = ref("")
+    let recommendations = ref("")
+    let symptoms = ref("")
+    let treatment = ref("")
+
 
     return {
       // Додати .... до об'єкту, який повертається
       showModal,
-      showModalDelete,
-      date,
-      time,
       id,
+      diagnosis,
+      recommendations,
+      symptoms,
+      treatment,
       doctorID,
       clientID,
       columns: createColumns({
@@ -170,11 +146,6 @@ export default {
           console.log('doctor id=' + doctorID.value)
           // console.log('data,time ='+date.value, time.value);
         },
-        onSubmitDelete(rowData) {
-          showModalDelete.value = true;
-          id.value = rowData.doctorAppointmentsID;
-          console.log('appointment id=' + id.value);
-        }
       }),
       pagination: false
     };
@@ -208,24 +179,19 @@ export default {
       console.log(clientID);
       console.log(doctorID);
       const data = {
-        doctorID: this.doctorID,
+        diagnosis:this.diagnosis,
+        recommendations:this.recommendations,
+        symptoms:this.symptoms,
+        treatment:this.treatment,
         clientID: this.clientID,
-        appointmentID: this.id,
-        date: this.date,
-        time: this.time,
+        doctorID:this.doctorID,
       }
       console.log(data)
-      api.post('http://65.109.235.33/api/v1/doctor/updateAppointment', data, {}).then(response => {
-        this.req = response.data
+      api.post('http://65.109.235.33/api/v1/doctor/treatment', data, {}).then(response => {
+
         this.message = response.data.result
-        window.location.href = 'http://localhost:8080/appointments';
+        window.location.href = 'http://localhost:8080/treatment';
       })
-    },
-    deleted(id) {
-      console.log(id);
-      //deleteAppointments
-      api.get('http://65.109.235.33/api/v1/doctor/deleteAppointments/' + id);
-      window.location.href = 'http://localhost:8080/appointments';
     },
     hasRole(role) {
       if (localStorage.getItem('role') === role) {
@@ -260,4 +226,10 @@ export default {
   margin: 0 auto;
   border: 1px solid black;
 }
+.middle {
+   padding-top: 50px;
+   width: 800px;
+   margin: 0 auto;
+ }
+
 </style>

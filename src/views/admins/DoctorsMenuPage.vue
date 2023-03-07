@@ -2,64 +2,71 @@
   <h1> Всі лікарі </h1>
 
   <div v-if="hasRole('ROLE_ADMIN')">
+    <div class="middle1">
+      <UInput class="form-group" v-model="searchFio" placeholder="Пошук" @input="onSearch()"  />
+    </div>
     <n-data-table class="table"
                   :columns="columns"
                   :data="items"
                   :pagination="pagination"
                   :bordered="false"
     />
+        <div class="middle">
     <h1> Видалити лікаря </h1>
-    <n-form-item path="id">
-      <n-input class="even-row-color" v-model:value="id" placeholder="введіть id лікаря"/>
-    </n-form-item>
+    <div v-if="hasRole('ROLE_USER')">Доступ запрещен-----> USER_ROLE иди нахуй</div>
 
-    <div class="button">
-    <n-button type="error" @click="deleteDoctors">
+
+    <UInput class="even-row-color" v-model="id" placeholder="введіть id лікаря"/>
+
+
+    <UButton type="error" @click="deleteDoctors">
       DELETE
-    </n-button>
+    </UButton>
+
+    <div class="left">
+      <h1> Додавання лікаря </h1>
+
+      <UInput v-model="firstName" placeholder="Ім'я лікаря"/>
+
+
+      <UInput v-model="lastName" placeholder="Призвіще лікаря"/>
+
+
+      <UInput v-model="about" placeholder="Інформація про лікаря"/>
+
+
+      <UInput v-model="photo" placeholder="Ссилка на фото лікаря"/>
+
+
+      <UInput :options="selectOptions" v-model="speciality" type="options">Виберіть спеціалізацію лікаря
+      </UInput>
     </div>
-    <h1> Додавання лікаря </h1>
-    <n-form-item >
-      <n-input class="even-row-color" v-model:value="doctorFirstName" placeholder="Ім'я лікаря"/>
-    </n-form-item>
-    <n-form-item >
-      <n-input class="even-row-color" v-model:value="doctorLastName" placeholder="Призвіще лікаря"/>
-    </n-form-item>
+    <div class="right">
+      <h1> Створення акаунту для лікаря </h1>
+      <lable>Phone</lable>
+      <UInput type="tel" v-model="login" placeholder="Логін"/>
 
-    <n-form-item >
-      <n-input class="even-row-color" v-model:value="about" placeholder="Інформація про лікаря"/>
-    </n-form-item>
-    <n-form-item >
-      <n-input class="even-row-color" v-model:value="linkPhoto" placeholder="Ссилка на фото лікаря"/>
-    </n-form-item>
-
-    <n-form-item >
-      <n-select class="even-row-color"  :options="selectOptions" v-model:value="speciality"/>
-    </n-form-item>
-    <h1> Створення акаунту для лікаря </h1>
-    <n-form-item >
-      <n-input class="even-row-color" v-model:value="login" placeholder="Логін"/>
+      <lable>Password</lable>
+      <UInput type="password" v-model="password" placeholder="Пароль"/>
+      <lable>Re-Password</lable>
+      <UInput type="password" v-model="rePassword" placeholder="Повтор паролю"/>
+      <lable>Email</lable>
+      <UInput type="email" v-model="email" placeholder="Емейл"/>
 
 
-      <n-input class="even-row-color" type="password" v-model:value="password" placeholder="Пароль"/>
+      <UButton type="success" @click="saveDoctor()">
+        SAVE
+      </UButton>
 
-      <n-input class="even-row-color" type="password" v-model:value="rePassword" placeholder="Повтор паролю"/>
-
-      <n-input class="even-row-color" v-model:value="email" placeholder="Емейл"/>
-    </n-form-item>
-    <div class="button">
-    <n-button type="success" @click="saveDoctor()">
-      SAVE
-    </n-button>
     </div>
-
   </div>
-  <div v-if="hasRole('ROLE_USER')">Доступ запрещен-----> USER_ROLE иди нахуй</div>
+    </div>
 </template>
 <script>
 
 import api from "@/interceptors/axios";
-import {NButton, NInput} from "naive-ui";
+import UInput from "@/components/global/UInput.vue";
+import UButton from "@/components/global/UButton.vue";
 
 const createColumns = () => {
   return [
@@ -70,18 +77,18 @@ const createColumns = () => {
     },
     {
       title: "Ім'я",
-      key: "doctorFirstName",
-      minWidth: '100px'
+      key: "firstName",
+      minWidth: '130px'
     },
     {
       title: "Призвіще",
-      key: "doctorLastName",
-      minWidth: '100px'
+      key: "lastName",
+      minWidth: '150px'
     },
     {
       title: "Спеціальність",
       key: "speciality",
-      minWidth: '100px'
+      minWidth: '150px'
     },
     {
       title: "Про лікаря",
@@ -107,23 +114,24 @@ export default {
     this.getAllDoctor()
 
   },
-  components: {NButton, NInput},
+  components: {UButton, UInput},
   name: "LoginHyi",
 
   data() {
     return {
       hideContent: false,
-      doctorFirstName: null,
-      doctorLastName: null,
+      firstName: null,
+      lastName: null,
       speciality: null,
+      searchFio: null,
       about: null,
-      linkPhoto: null,
+      photo: null,
       message: null,
       req: null,
       role: null,
       token: null,
       login: null,
-      id:null,
+      id: null,
       selectOptions: ([
         {
           label: "Терапевт",
@@ -156,11 +164,11 @@ export default {
       email: null,
       items: [{
         id: null,
-        doctorFirstName: null,
-        doctorLastName: null,
+        firstName: null,
+        lastName: null,
         speciality: null,
         about: null,
-        linkPhoto: null,
+        photo: null,
       }]
     }
   },
@@ -168,7 +176,7 @@ export default {
   methods: {
     deleteDoctors() {
 
-      api.delete('http://65.109.235.33:8085/api/v1/admin/doctors/delete/' + this.id, {}).then((res) => {
+      api.delete('http://65.109.235.33/api/v1/admin/doctors/delete/' + this.id, {}).then((res) => {
         this.id = res.data.id
         console.log(res.data.id)
         window.location.href = 'http://localhost:8080/doctorsMenu';
@@ -176,7 +184,7 @@ export default {
 
     },
     getAllDoctor() {
-      api.get('http://65.109.235.33:8085/api/v1/admin/doctors/search', {}).then((res) => {
+      api.get('http://65.109.235.33/api/v1/admin/doctors/search', {}).then((res) => {
         this.items = res.data
         console.log(res.data)
       }).catch((error) => console.error(error))
@@ -184,11 +192,11 @@ export default {
     },
     saveDoctor() {
       const data = {
-        doctorFirstName: this.doctorFirstName,
-        doctorLastName: this.doctorLastName,
+        firstName: this.firstName,
+        lastName: this.lastName,
         speciality: this.speciality,
         about: this.about,
-        linkPhoto: this.linkPhoto,
+        photo: this.photo,
         login: this.login,
         password: this.password,
         rePassword: this.rePassword,
@@ -197,13 +205,20 @@ export default {
 
       }
       console.log(data)
-      api.post('http://65.109.235.33:8085/api/v1/admin/saveDoctor', data, {}).then(response => {
+      api.post('http://65.109.235.33/api/v1/admin/saveDoctor', data, {}).then(response => {
         this.req = response.data
         window.location.href = 'http://localhost:8080/doctorsMenu';
         this.message = response.data.result
 
       })
 
+    },
+    onSearch() {
+      console.log(this.searchFio)
+      api.get('http://65.109.235.33/api/v1/admin/searchDoctor/' + this.searchFio, {}).then((res) => {
+        this.items = res.data
+        console.log(res.data)
+      }).catch((error) => console.error(error))
     },
     hasRole(role) {
       if (localStorage.getItem('role') === role) {
@@ -220,15 +235,20 @@ export default {
 </script>
 <style scoped>
 
-.even-row-color {
-  width: 30%;
-  height: 30px;
-  display: block;
-  margin: 0 auto;
-  border: 1px solid black;
-}
 .table > tbody > tr > td:first-child {
   white-space: nowrap;
+}
+
+.table {
+
+  padding: .25rem .5rem;
+  font-size: .875rem;
+  border-radius: .2rem;
+  box-sizing: border-box;
+  width: 90%;
+  font-weight: bold;
+  margin: 0 auto;
+  border: 1px solid black;
 }
 
 .button {
@@ -236,4 +256,16 @@ export default {
   justify-content: center;
 }
 
+/*.left {*/
+/*  float: left;*/
+/*}*/
+
+/*.right {*/
+/*  float: right;*/
+/*}*/
+.middle{
+  padding-top: 50px;
+  width: 400px;
+  margin: 0 auto;
+}
 </style>

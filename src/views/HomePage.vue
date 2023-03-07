@@ -1,6 +1,6 @@
 <template>
 
-  <h1>WELCOME CLINIC_NAME</h1>
+  <h2>Ласкаво просимо до нашої клініки, де ми працюємо для вашого здоров'я та комфорту.</h2>
   <n-carousel draggable>
     <img class="carousel" :src="img1"/>
     <img class="carousel" :src="img2"/>
@@ -38,7 +38,7 @@ export default {
     },
 
     sendEmailReminder() {
-      api.get('http://65.109.235.33:8085/api/v1/admin/sendEmailReminder', {})
+      api.get('http://65.109.235.33/api/v1/admin/sendEmailReminder', {})
           .catch((error) => console.error(error));
     },
   },
@@ -63,6 +63,15 @@ h1 {
   padding-top: 1px;
   padding-bottom: 1px;
   font-size: 50px;
+  font-weight: 600;
+}
+h2 {
+  display: flex;
+  justify-content: center;
+
+  padding-top: 1px;
+  padding-bottom: 1px;
+  font-size: 20px;
   font-weight: 600;
 }
 

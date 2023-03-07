@@ -2,6 +2,9 @@
 
   <div v-if="hasRole('ROLE_ADMIN')">
     <h1>Картки клієнтів </h1>
+    <div class="middle1">
+      <UInput class="form-group" v-model="searchFio" placeholder="Пошук" @input="onSearch()"  />
+    </div>
 
     <n-data-table class="table"
                   :columns="columns"
@@ -10,51 +13,61 @@
                   :bordered="false"
     />
 
-    <n-form-item class="form" path="id">
-      <n-input class="form-group" v-model:value="id" placeholder="id"/>
-    </n-form-item>
-    <div class="button">
-      <n-button type="error" @click="deletePatientCard" >
-        DELETE
-      </n-button>
+    <div class="middle">
+      <n-form-item class="form" path="id">
+        <n-input class="form-group" v-model:value="id" placeholder="id"/>
+      </n-form-item>
+      <div class="button">
+        <n-button type="error" @click="deletePatientCard">
+          DELETE
+        </n-button>
+      </div>
     </div>
   </div>
   <div v-if="hasRole('ROLE_USER')">
-    <h1>MY PROFILE MENU </h1>
+    <h1>Мій профіль </h1>
     <n-data-table class="background"
                   :columns="columns"
                   :data="items"
                   :pagination="pagination"
                   :bordered="false"
     />
-    <form class="form-2" @submit.prevent="onSubmit">
-      <n-gradient-text gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)" size="20">
-        COMPLETE YOUR PROFILE
-        <div>___________________________</div>
-      </n-gradient-text>
+    <div class="middle">
+      <UForm form-title="Тут ви можете редагувати свій профіль"
+             @submit.prevent="onSubmit"
+             formSubmitText="Update"
 
-      <n-gradient-text gradient="linear-gradient(90deg, red 0%, green 50%, blue 100%)" size="20">
+
+      >
+
+
         <label><i class="icon-lock"></i></label>
         <n-date-picker v-model:value="birthday" value=""/>
         <label><i class="icon-lock"></i> </label>
-        <n-input v-model:value="placeOfResidence" type="text" name="username" placeholder="placeOfResidence"
+        <n-input v-model:value="placeOfResidence" type="text" name="placeOfResidence" placeholder="Місце народження"
                  size="large"
                  round/>
         <label><i class="icon-lock"></i> </label>
-        <n-input v-model:value="insurancePolicy" type="text" name="username" placeholder="insurancePolicy" size="large"
+        <n-input v-model:value="fio" type="text" name="fio" placeholder="ПІБ"
+                 size="large"
                  round/>
         <label><i class="icon-lock"></i> </label>
-        <n-input v-model:value="phoneNumber" type="text" name="username" placeholder="phoneNumber" size="large" round/>
+        <n-input v-model:value="email" type="text" name="email" placeholder="email"
+                 size="large"
+                 round/>
+        <label><i class="icon-lock"></i> </label>
+        <n-input v-model:value="insurancePolicy" type="text" name="insurancePolicy" placeholder="Страховий поліс"
+                 size="large"
+                 round/>
+        <label><i class="icon-lock"></i> </label>
+        <n-input v-model:value="phoneNumber" type="text" name="phoneNumber" placeholder="Номер телефону" size="large"
+                 round/>
         <label><i class="icon-lock"></i> </label>
         <n-select :style="{ width: '100%' }" :options="selectOptions" v-model:value="sex"/>
-        <div>___________________________</div>
-      </n-gradient-text>
-      <p class="clearfix">
-        <a href="/myAppointment" class="registration">APPOINTMENTS</a>
-        <input type="submit" name="submit" value="SAVE" @click="reload()">
 
-      </p>
-    </form>
+
+      </UForm>
+    </div>
   </div>
 
 </template>
@@ -63,12 +76,14 @@
 import api from "@/interceptors/axios";
 import {NInput} from 'naive-ui'
 import axios from "axios";
+import UForm from "@/components/global/UForm.vue";
+import UInput from "@/components/global/UInput.vue";
 
 const createColumns = () => {
   return [
     {
       title: "ID",
-      key: "id"
+      key: "id",
     },
     {
       title: "ПІБ",
@@ -110,10 +125,13 @@ export default {
   },
   mounted() {
     this.checkAuthorization()
-    this.getProfileAdmin()
+    // this.getProfileAdmin()
+    this.onSearch()
     this.getProfileUser()
   },
   components: {
+    UInput,
+    UForm,
     NInput
   },
   name: "UserProfile",
@@ -122,22 +140,26 @@ export default {
     return {
       selectOptions: ([
         {
-          label: "male",
-          value: "male",
+          label: "Чоловіча",
+          value: "Чоловіча",
         },
         {
-          label: "female",
-          value: "female"
+          label: "Жіноча",
+          value: "жіноча"
         },
 
       ]),
+      search: false,
+      searchFio: null,
       birthday: null,
       test: "text",
       insurancePolicy: null,
       placeOfResidence: null,
-      sex: 'male',
+      sex: 'Вкажіть свою стать',
       phoneNumber: null,
       id: null,
+      email: null,
+      fio: null,
       items: [{
         id: null,
         birthday: null,
@@ -154,7 +176,7 @@ export default {
   methods: {
     getProfileAdmin() {
       if (localStorage.getItem('role') === 'ROLE_ADMIN') {
-        api.get('http://65.109.235.33:8085/api/v1/admin/myProfile', {}).then((res) => {
+        api.get('http://65.109.235.33/api/v1/admin/myProfile', {}).then((res) => {
           this.items = res.data
           console.log(res.data)
         }).catch((error) => console.error(error))
@@ -162,7 +184,7 @@ export default {
     },
     getProfileUser() {
       if (localStorage.getItem('role') === 'ROLE_USER') {
-        api.get('http://65.109.235.33:8085/api/v1/users/myProfile', {}).then((res) => {
+        api.get('http://65.109.235.33/api/v1/users/myProfile', {}).then((res) => {
           this.items = res.data
           console.log(res.data)
         }).catch((error) => console.error(error))
@@ -170,7 +192,7 @@ export default {
     },
     deletePatientCard() {
       const token = localStorage.getItem('token')
-      axios.get('http://65.109.235.33:8085/api/v1/admin/patientCard/delete/' + this.id, {
+      axios.get('http://65.109.235.33/api/v1/admin/patientCard/delete/' + this.id, {
         headers: {
           'Authorization': `Bearer_${token}`
         }
@@ -190,18 +212,34 @@ export default {
         insurancePolicy: this.insurancePolicy,
         email: this.email,
         phoneNumber: this.phoneNumber,
+        fio: this.fio,
       }
       console.log(data)
 
-      api.post('http://65.109.235.33:8085/api/v1/users/update', data, {})
+      api.post('http://65.109.235.33/api/v1/users/update', data, {}).then(() => {
 
+        if (this.phoneNumber) {
+          localStorage.removeItem('username')
+          localStorage.removeItem('token')
+          localStorage.removeItem('role')
+          window.location.href = 'http://localhost:8080/login';
+        } else {
+          window.location.reload()
+        }
+      }).catch((error) => console.error(error))
+    },
+    onSearch() {
+      console.log(this.searchFio)
+      api.get('http://65.109.235.33/api/v1/admin/searchPatient/' + this.searchFio, {}).then((res) => {
+        this.items = res.data
+        console.log(res.data)
+      }).catch((error) => console.error(error))
     },
 
     checkAuthorization() {
       if (localStorage.getItem('token') == null && localStorage.getItem('role') === "admin") {
         this.hideContent = false
       }
-
     },
     handleUpdateValue({year, month, date}) {
       console.log(`${year}-${month}-${date}`)
@@ -225,41 +263,18 @@ export default {
   border-radius: .2rem;
   box-sizing: border-box;
   width: 90%;
-
+  font-weight: bold;
   margin: 0 auto;
-  border: 0px solid black;
+  border: 1px solid black;
 }
-
-.form-2 {
-
-
-}
-
-/*.even-row-color {*/
-/*  width: 30%;*/
-/*  height: 30px;*/
-/*  display: block;*/
-/*  margin: 0 auto;*/
-/*  border: 1px solid black;*/
-/*  --n-color-focus: red;*/
-
-
-/*}*/
 
 .background {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 70%;
+  width: 80%;
   border: 1px solid black;
-  background: #f5f5f5 url('https://i.ibb.co/PZB0b1X/223223.png');
-  background-repeat: no-repeat;
   background-size: cover;
-}
-
-.button {
-  display: flex;
-  justify-content: center;
 }
 
 </style>

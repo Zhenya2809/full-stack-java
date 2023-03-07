@@ -1,17 +1,18 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "@/views/HomePage.vue";
-import About from "@/views/AboutPage.vue";
+import About from "@/views/users/AboutPage.vue";
 import Login from "@/views/LoginPage.vue";
 import Registration from "@/views/RegistrationPage";
-import DoctorsMenu from "@/views/doctors/DoctorsMenuPage";
-import ChoseDoctor from "@/views/doctors/ChoseDoctorPage";
+import DoctorsMenu from "@/views/admins/DoctorsMenuPage.vue";
+import ChoseDoctor from "@/views/users/ChoseDoctorPage.vue";
 import Admin from "@/views/admins/AdminPage";
-import UserMenu from "@/views/UsersMenuPage";
-import CalendarAppointmentPage from "@/views/CalendarAppointmentPage";
-import myAppointmentPage from "@/views/MyAppointmentPage";
+import UserMenu from "@/views/admins/UsersMenuPage.vue";
+import CalendarAppointmentPage from "@/views/users/CalendarAppointmentPage.vue";
+import myAppointmentPage from "@/views/users/MyAppointmentPage.vue";
 import AppointmentsUserForDoctorPage from "@/views/doctors/AppointmentsUserForDoctorPage";
-import UserProfilePage from "@/views/ProfilePage";
-
+import UserProfilePage from "@/views/userandadmin/ProfilePage.vue";
+import DoctorProfilePage from "@/views/doctors/doctorProfilePage.vue";
+import TreatmentPage from "@/views/doctors/TreatmentPage.vue";
 
 
 
@@ -19,6 +20,10 @@ const routes = [
     {
         path: "/",
         component: Home,
+    },
+    {
+        path: "/treatment",
+        component: TreatmentPage,
     },
     {
         path: "/myAppointment",
@@ -63,6 +68,10 @@ const routes = [
     {
         path: "/usersMenu",
         component: UserMenu,
+    },
+    {
+        path: "/doctorProfilePage",
+        component: DoctorProfilePage,
     }
 
 ];

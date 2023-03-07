@@ -1,43 +1,59 @@
 <template>
-  <div class="textMessage"><span>{{ message }}</span>
+  <div class="textMessage">
+    <span>{{ message }}</span>
   </div>
 
 
-  <form class="form-2" @submit.prevent="onRegistration">
-    <h1><span class="log-in">Войти</span> или <span class="sign-up">зарегистрироваться</span></h1>
-    <p class="float">
-      <label><i class="icon-user"></i>Login</label>
-      <n-input v-model:value="username" type="text" placeholder="login" name="userName" autocomplete="name"/>
-    </p>
-    <p class="float">
-      <label><i class="icon-user"></i>Email</label>
-      <n-input v-model:value="email" type="text" name="email" placeholder="email"/>
-    </p>
-    <p class="float">
-      <label><i class="icon-user"></i>FirstName</label>
-      <n-input v-model:value="firstName" type="text" name="firstName" placeholder="firstName" autocomplete="family-name"/>
-    </p>
-
-    <p class="float">
-      <label><i class="icon-user"></i>lastName</label>
-      <n-input v-model:value="lastName" type="text" name="lastName" placeholder="lastName" />
-    </p>
+  <form class="login-form" @submit.prevent="onRegistration">
+    <label><i class="form-label"></i>Номер телефону</label>
+    <UInput v-model="username"
+            :type="login"
+            placeholder="Номер телефону"
+            autocomplete="name"
+            class="UInput" required/>
 
 
+    <label><i class="orm-label"></i>Email</label>
+    <UInput v-model="email"
+            type="email"
+            placeholder="email"
+            class="UInput" required/>
 
-    <p class="float">
-      <label><i class="icon-lock"></i>Пароль</label>
-      <n-input v-model:value="password" name="password" placeholder="password" type="password" class="showpassword"/>
-    </p>
-    <p class="float">
-      <label><i class="icon-lock"></i>Re-Пароль</label>
-      <n-input v-model:value="rePassword" name="rePassword" placeholder="rePassword" type="password"
-               class="showpassword"/>
-    </p>
+
+    <label><i class="orm-label"></i>Ім'я</label>
+    <UInput v-model="firstName"
+            :type="firstName"
+            placeholder="Ім'я"
+            autocomplete="family-name"
+            class="UInput" required/>
+
+
+    <label><i class="orm-label"></i>Призвіще</label>
+    <UInput v-model="lastName"
+            :type="lastName"
+            placeholder="Призвіще"
+            class="UInput" />
+
+
+    <label><i class="orm-label"></i>Пароль</label>
+    <UInput v-model="password"
+            type="password"
+            placeholder="Пароль"
+            class="UInput"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            required/>
+
+
+    <label><i class="orm-label"></i>Re-Пароль</label>
+    <UInput v-model="rePassword"
+            type="password"
+            placeholder="re-пароль"
+            class="UInput"
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            required/>
 
     <p class="clearfix">
-
-      <input class="input" type="submit" name="submit" value="Зарегистрироваться">
+      <button type="submit" class="form-button">Зареєструватись</button>
     </p>
   </form>
 </template>
@@ -46,24 +62,25 @@
 
 
 import axios from "axios";
-import {NInput} from "naive-ui";
+import UInput from "@/components/global/UInput.vue";
 
 export default {
   components: {
-    NInput
+    UInput
   },
   name: "RegistrationPage",
   data() {
     return {
-      username: '',
-      password: '',
-      rePassword: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      req: '',
-      role: '',
-      message: '',
+      login: null,
+      username: null,
+      password: null,
+      rePassword: null,
+      firstName: null,
+      lastName: null,
+      email: null,
+      req: null,
+      role: null,
+      message: null,
     }
   },
 
@@ -79,9 +96,9 @@ export default {
 
       }
       console.log(data)
-      axios.post('http://65.109.235.33:8085/api/v1/users/registration', data).then(response => {
+      axios.post('http://65.109.235.33/api/v1/users/registration', data).then(response => {
         this.req = response.data
-        window.location.href = 'http://localhost:3000/login';
+        window.location.href = 'http://localhost:8080/login';
         this.message = response.data.result
 
       })
@@ -92,202 +109,45 @@ export default {
 </script>
 
 <style>
-.textMessage{
-  font-size: 25px;
-  font-weight: bold;
-  color: red;
-  margin-top: 5%; /* Отступ сверху */
-  padding-bottom: 30px;
-  border-bottom: 1px solid #EBE6E2;
-  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.8);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
-
-
-}
-.form-2 {
-  /* Size and position */
-  width: 340px;
-  margin: 60px auto 30px;
-  padding: 15px;
-  position: relative;
-
-  /* Styles */
-  background: #fffaf6;
-  border-radius: 4px;
-  color: #7e7975;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2),
-  0 1px 5px rgba(0, 0, 0, 0.2),
-  0 0 0 12px rgba(255, 255, 255, 0.4);
+.login-form {
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 23px;
 }
 
-.form-2 h1 {
-  font-size: 15px;
-  font-weight: bold;
-  color: #bdb5aa;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #EBE6E2;
-  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.8);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
-.form-2 h1 .log-in,
-.form-2 h1 .sign-up {
-  display: inline-block;
-  text-transform: uppercase;
-}
-
-.form-2 h1 .log-in {
-  color: #6c6763;
-  padding-right: 2px;
-}
-
-.form-2 h1 .sign-up {
-  color: #ffb347;
-  padding-left: 2px;
-}
-
-.form-2 .float {
-  width: 50%;
-  float: left;
-  padding-top: 15px;
-  border-top: 1px solid rgba(255, 255, 255, 1);
-}
-
-.form-2 .float:first-of-type {
-  padding-right: 5px;
-}
-
-.form-2 .float:last-of-type {
-  padding-left: 5px;
-}
-
-.form-2 label {
+.form-label {
+  font-size: 1rem;
   display: block;
-  padding: 0 0 5px 2px;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-weight: 400;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
-  font-size: 11px;
+  margin-bottom: 0.5rem;
 }
 
-.form-2 label i {
-  margin-right: 5px; /* Gap between icon and text */
-  display: inline-block;
-  width: 10px;
-}
-
-.form-2 n-input[type=text],
-.form-2 n-input[type=password] {
-  font-family: 'Lato', Calibri, Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  display: block;
+.form-button {
   width: 100%;
-  padding: 5px;
-  margin-bottom: 5px;
-  border: 3px solid #ebe6e2;
-  border-radius: 5px;
-  transition: all 0.3s ease-out;
-}
-
-.form-2 n-input[type=text]:hover,
-.form-2 n-input[type=password]:hover {
-  border-color: #CCC;
-}
-
-.form-2 label:hover ~ input {
-  border-color: #CCC;
-}
-
-.form-2 n-input[type=text]:focus,
-.form-2 n-input[type=password]:focus {
-  border-color: #BBB;
-  outline: none; /* Remove Chrome's outline */
-}
-
-.clearfix:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.form-2 input[type=submit],
-.form-2 .registration {
-  /* Size and position */
-  width: 49%;
-  height: 38px;
-  float: left;
-  position: relative;
-
-  /* Styles */
-  box-shadow: inset 0 1px rgba(255, 255, 255, 0.3);
+  font-size: 1.2rem;
+  padding: 0.75rem;
+  color: #fff;
+  background-color: #08ff00;
+  border: none;
   border-radius: 3px;
   cursor: pointer;
-
-  /* Font styles */
-  font-family: 'Lato', Calibri, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 38px; /* Same as height */
-  text-align: center;
-  font-weight: bold;
 }
 
-.form-2 input[type=submit] {
-  margin-left: 1%;
-  background: linear-gradient(#fbd568, #ffb347);
-  border: 1px solid #f4ab4c;
-  color: #996319;
-  text-shadow: 0 1px rgba(255, 255, 255, 0.3);
+.form-button:hover,
+.form-button:focus {
+  background-color: #0ecc00;
 }
 
-.form-2 .registration {
-  margin-right: 1%;
-  background: linear-gradient(#34a5cf, #2a8ac4);
-  border: 1px solid #2b8bc7;
-  color: #ffffff;
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.3);
-  text-decoration: none;
+.UInput {
+
+  width: 70%
 }
 
-.form-2 input[type=submit]:hover,
-.form-2 .registration:hover {
-  box-shadow: inset 0 1px rgba(255, 255, 255, 0.3),
-  inset 0 20px 40px rgba(255, 255, 255, 0.15);
-}
-
-.form-2 input[type=submit]:active,
-.form-2 .registration:active {
-  top: 1px;
-}
-
-.no-boxshadow .form-2 input[type=submit]:hover {
-  background: #ffb347;
-}
-
-.no-boxshadow .form-2 .registration:hover {
-  background: #2a8ac4;
-}
-
-.form-2 p:last-of-type {
-  clear: both;
-}
-
-.form-2 .opt {
-  text-align: right;
-  margin-right: 3px;
-}
-
-.form-2 label[for=showPassword] {
-  display: inline-block;
-  margin-bottom: 10px;
-  font-size: 11px;
-  font-weight: 400;
-  text-transform: capitalize;
-}
-
-.form-2 input[type=checkbox] {
-  vertical-align: middle;
-  margin: -1px 5px 0 1px;
-}
 </style>
